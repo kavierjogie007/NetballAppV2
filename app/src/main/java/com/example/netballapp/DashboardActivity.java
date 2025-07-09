@@ -19,4 +19,10 @@ public class DashboardActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+
+    public void onPlayerProfilesClicked(View view) {
+        Intent intent = new Intent(DashboardActivity.this, Player_Profiles.class);
+        startActivity(intent);
+        finish();
+    }
 }

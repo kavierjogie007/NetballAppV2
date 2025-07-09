@@ -2,6 +2,7 @@ package com.example.netballapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -116,5 +117,11 @@ public class ManageCoachProfile extends AppCompatActivity {
                 Toast.makeText(ManageCoachProfile.this, "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    public void onBackClicked(View view) {
+        Intent intent = new Intent(ManageCoachProfile.this, DashboardActivity.class);
+        startActivity(intent);
+        finish(); // Finish LoginActivity so it's not in the back stack
     }
 }
