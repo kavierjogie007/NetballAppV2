@@ -18,12 +18,12 @@ import retrofit2.http.POST;
  * Typically,  GET annotations are used to fetch data from the API
  * The PUT annotation is used to insert data into the database
  * I would advise you to put all your api calls here, so login, add user, etc.
- *
  */
 
 public interface SuperbaseAPI {
         @GET("/rest/v1/coach") // Your table name is "Example"
-        Call<List<Coach>> getItems(@Query("select") String select); //first part of your query (select, update, insert, etc.)
+        Call<List<Coach>> getItems(
+                @Query("select") String select); //first part of your query (select, update, insert, etc.)
 
         @GET("rest/v1/coach")
         Call<List<Coach>> loginCoach(
@@ -42,9 +42,18 @@ public interface SuperbaseAPI {
                 @Query("coach_ID") String idFilter,
                 @Body Coach updatedCoach);
 
-        // POST new coach (registration)
         @POST("rest/v1/coach")
         @Headers({"Prefer: return=representation"})
-        Call<List<Coach>> registerCoach(@Body Coach coach);
+        Call<List<Coach>> registerCoach(
+                @Body Coach coach);
 
+        @GET("rest/v1/player")
+        Call<List<Player>> getPlayers(
+                @Query("select") String select // e.g., "*"
+        );
+
+        @POST("rest/v1/player")
+        @Headers({"Prefer: return=representation"})
+        Call<List<Player>> registerPlayer(
+                @Body Player player);
 }
