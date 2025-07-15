@@ -4,6 +4,7 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.PATCH;
@@ -21,6 +22,7 @@ import retrofit2.http.POST;
  */
 
 public interface SuperbaseAPI {
+        //Coach table
         @GET("/rest/v1/coach") // Your table name is "Example"
         Call<List<Coach>> getItems(
                 @Query("select") String select); //first part of your query (select, update, insert, etc.)
@@ -47,6 +49,11 @@ public interface SuperbaseAPI {
         Call<List<Coach>> registerCoach(
                 @Body Coach coach);
 
+        // GET player by ID
+        @GET("rest/v1/player")
+        Call<List<Player>> getPlayerById(
+                @Query("player_ID") String idFilter); // Use "eq.1"
+
         @GET("rest/v1/player")
         Call<List<Player>> getPlayers(
                 @Query("select") String select // e.g., "*"
@@ -56,4 +63,20 @@ public interface SuperbaseAPI {
         @Headers({"Prefer: return=representation"})
         Call<List<Player>> registerPlayer(
                 @Body Player player);
+
+        @PATCH("rest/v1/player")
+        @Headers({"Prefer: return=representation"})
+        Call<List<Player>> updatePlayerProfile(
+                @Query("player_ID") String idFilter,
+                @Body Player updatedPlayer);
+
+        @DELETE("rest/v1/player")
+        @Headers("Prefer: return=minimal")
+        Call<Void> deletePlayer(
+                @Query("player_ID") String idFilter);
+
+        @POST("rest/v1/game")
+        @Headers({"Prefer: return=representation"})
+        Call<List<Game>> setUpNewGame(
+                @Body Game game);
 }

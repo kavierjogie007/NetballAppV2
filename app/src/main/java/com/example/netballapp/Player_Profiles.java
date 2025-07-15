@@ -1,5 +1,6 @@
 package com.example.netballapp;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -7,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +18,9 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class Player_Profiles extends AppCompatActivity {
+    private SuperbaseAPI api;
+    private  PlayerAdapter adapter;
+    private List<Player> players;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,11 +29,20 @@ public class Player_Profiles extends AppCompatActivity {
 
         ListView listView = findViewById(R.id.playerListView);
 
-        List<Player> players = new ArrayList<>();
-        PlayerAdapter adapter = new PlayerAdapter(this, players);
+        players = new ArrayList<>();
+        //Activity responds
+        adapter = new PlayerAdapter(this, players, (player, position) ->
+                new AlertDialog.Builder(Player_Profiles.this)
+                .setTitle("Confirm Deletion")
+                .setMessage("Delete " + player.getPlayer_FirstName() + "?")
+                .setPositiveButton("Yes", (dialog, which) -> {
+                    deletePlayerFromAPI(player.getPlayer_ID(), position);
+                })
+                .setNegativeButton("Cancel", null)
+                .show());
         listView.setAdapter(adapter);
 
-        SuperbaseAPI api = RetrofitClient.getClient().create(SuperbaseAPI.class);
+        api = RetrofitClient.getClient().create(SuperbaseAPI.class);
 
         Call<List<Player>> call = api.getPlayers("*"); // Select all columns
         call.enqueue(new Callback<List<Player>>() {
@@ -47,6 +61,27 @@ public class Player_Profiles extends AppCompatActivity {
             public void onFailure(Call<List<Player>> call, Throwable t)
             {
                 Log.e("API", "Failed: " + t.getMessage());
+            }
+        });
+    }
+
+    private void deletePlayerFromAPI(long playerId, int position) {
+        Call<Void> call = api.deletePlayer("eq." + playerId);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()) {
+                    players.remove(position);
+                    adapter.notifyDataSetChanged();
+                    Toast.makeText(Player_Profiles.this, "Player deleted", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(Player_Profiles.this, "Failed to delete player", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Toast.makeText(Player_Profiles.this, "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -2,6 +2,7 @@ package com.example.netballapp;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -13,12 +14,13 @@ import java.util.List;
 public class PlayerAdapter extends BaseAdapter {
     private Context context;
     private List<Player> playerList;
+    private OnPlayerActionListener listener;
 
-    public PlayerAdapter(Context context, List<Player> playerList) {
+    public PlayerAdapter(Context context, List<Player> playerList, OnPlayerActionListener listener) {
         this.context = context;
         this.playerList = playerList;
+        this.listener = listener;
     }
-
     @Override
     public int getCount() {
         return playerList.size();
@@ -48,11 +50,14 @@ public class PlayerAdapter extends BaseAdapter {
         txtSurname.setText(p.getPlayer_Surname());
 
         btnUpdate.setOnClickListener(v -> {
-            // handle update
+            Intent intent = new Intent(context, UpdatePlayerProfile.class);
+            intent.putExtra("player_id", p.getPlayer_ID()); // pass player ID
+            context.startActivity(intent);
         });
 
+        //Adapter calls
         btnDelete.setOnClickListener(v -> {
-            // handle delete
+            listener.onDeletePlayer(playerList.get(position), position);
         });
 
         return view;

@@ -25,4 +25,10 @@ public class DashboardActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+
+    public void onSetUpNewGameClicked(View view) {
+        Intent intent = new Intent(DashboardActivity.this, SetUpNewGameActivity.class);
+        startActivity(intent);
+        finish();
+    }
 }

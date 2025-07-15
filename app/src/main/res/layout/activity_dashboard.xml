@@ -143,6 +143,7 @@
             android:layout_margin="12dp"
             android:background="@drawable/card_background"
             android:gravity="center"
+            android:onClick="onSetUpNewGameClicked"
             android:orientation="vertical">
 
             <View
