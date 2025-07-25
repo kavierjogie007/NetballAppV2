@@ -31,7 +31,7 @@ public class AddPlayer extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_player);
 
-        //testing
+        //testing1
         edtFirstName = findViewById(R.id.edtFirstName);
         edtSurname = findViewById(R.id.edtSurname);
         edtPlayerNumber = findViewById(R.id.edtPlayerNumber);
