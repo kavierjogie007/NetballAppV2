@@ -1,4 +1,8 @@
-package com.example.netballapp;
+package com.example.netballapp.api;
+
+import com.example.netballapp.Model.Coach;
+import com.example.netballapp.Model.Game;
+import com.example.netballapp.Model.Player;
 
 import java.util.List;
 

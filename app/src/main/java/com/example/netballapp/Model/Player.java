@@ -1,8 +1,6 @@
-package com.example.netballapp;
+package com.example.netballapp.Model;
 
 import com.google.gson.annotations.SerializedName;
-
-import java.util.Date;
 
 public class Player {
     @SerializedName("player_ID")

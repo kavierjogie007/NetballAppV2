@@ -1,4 +1,4 @@
-package com.example.netballapp;
+package com.example.netballapp.activities;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,6 +10,12 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.netballapp.Model.Player;
+import com.example.netballapp.adapters.PlayerAdapter;
+import com.example.netballapp.R;
+import com.example.netballapp.api.RetrofitClient;
+import com.example.netballapp.api.SuperbaseAPI;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +25,7 @@ import retrofit2.Response;
 
 public class Player_Profiles extends AppCompatActivity {
     private SuperbaseAPI api;
-    private  PlayerAdapter adapter;
+    private PlayerAdapter adapter;
     private List<Player> players;
 
     @Override

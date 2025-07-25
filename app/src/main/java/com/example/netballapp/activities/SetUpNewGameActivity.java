@@ -1,4 +1,4 @@
-package com.example.netballapp;
+package com.example.netballapp.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -10,6 +10,11 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import com.example.netballapp.Model.Game;
+import com.example.netballapp.R;
+import com.example.netballapp.api.RetrofitClient;
+import com.example.netballapp.api.SuperbaseAPI;
 
 import java.io.IOException;
 import java.util.List;
@@ -94,9 +99,9 @@ public class SetUpNewGameActivity extends AppCompatActivity {
             public void onResponse(Call<List<Game>> call, Response<List<Game>> response) {
                 if (response.isSuccessful()) {
                     Toast.makeText(SetUpNewGameActivity.this, "Set Up New Game successful!", Toast.LENGTH_SHORT).show();
-                    //Intent intent = new Intent(SetUpNewGameActivity.this, Player_Profiles.class);
-                    // startActivity(intent);
-                   // finish();
+                    Intent intent = new Intent(SetUpNewGameActivity.this, SetUpCourtActivity.class);
+                    startActivity(intent);
+                   finish();
                 }
                 else
                 {

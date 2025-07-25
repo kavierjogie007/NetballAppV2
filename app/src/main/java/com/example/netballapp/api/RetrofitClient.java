@@ -1,4 +1,4 @@
-package com.example.netballapp;
+package com.example.netballapp.api;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;

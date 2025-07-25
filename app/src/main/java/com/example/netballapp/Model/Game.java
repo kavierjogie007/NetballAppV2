@@ -1,4 +1,4 @@
-package com.example.netballapp;
+package com.example.netballapp.Model;
 
 import com.google.gson.annotations.SerializedName;
 

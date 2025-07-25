@@ -1,13 +1,18 @@
-package com.example.netballapp;
+package com.example.netballapp.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.example.netballapp.Model.Coach;
+import com.example.netballapp.R;
+import com.example.netballapp.api.RetrofitClient;
+import com.example.netballapp.api.SuperbaseAPI;
+
 import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;

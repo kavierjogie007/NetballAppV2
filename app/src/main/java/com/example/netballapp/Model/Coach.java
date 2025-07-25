@@ -1,4 +1,4 @@
-package com.example.netballapp;
+package com.example.netballapp.Model;
 
 public class Coach {
     public Long coach_ID;

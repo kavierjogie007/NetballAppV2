@@ -15,28 +15,33 @@
         android:theme="@style/Theme.NetBallApp"
         tools:targetApi="31">
         <activity
-            android:name=".SetUpNewGameActivity"
+            android:name=".activities.SetUpCourtActivity"
+            android:exported="false"
+            android:label="@string/title_activity_set_up_court"
+            android:theme="@style/Theme.NetBallApp" />
+        <activity
+            android:name=".activities.SetUpNewGameActivity"
             android:exported="false" />
         <activity
-            android:name=".UpdatePlayerProfile"
+            android:name=".activities.UpdatePlayerProfile"
             android:exported="false" />
         <activity
-            android:name=".AddPlayer"
+            android:name=".activities.AddPlayer"
             android:exported="false" />
         <activity
-            android:name=".Player_Profiles"
+            android:name=".activities.Player_Profiles"
             android:exported="false" />
         <activity
-            android:name=".RegisterCoachActivity"
+            android:name=".activities.RegisterCoachActivity"
             android:exported="false" />
         <activity
-            android:name=".ManageCoachProfile"
+            android:name=".activities.ManageCoachProfile"
             android:exported="false" />
         <activity
-            android:name=".DashboardActivity"
+            android:name=".activities.DashboardActivity"
             android:exported="false" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".activities.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -1,4 +1,4 @@
-package com.example.netballapp;
+package com.example.netballapp.adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -8,6 +8,11 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.example.netballapp.Model.Player;
+import com.example.netballapp.listeners.OnPlayerActionListener;
+import com.example.netballapp.R;
+import com.example.netballapp.activities.UpdatePlayerProfile;
 
 import java.util.List;
 
