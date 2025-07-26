@@ -9,6 +9,11 @@ public class Player {
     @SerializedName("player_firstname")
     public String player_FirstName;
 
+    public Player(String player_FirstName, String player_Surname) {
+        this.player_FirstName = player_FirstName;
+        this.player_Surname = player_Surname;
+    }
+
     @SerializedName("player_surname")
     public String player_Surname;
 
@@ -34,5 +39,24 @@ public class Player {
 
     public long getPlayer_ID() {
         return player_ID;
+    }
+
+    public Integer getPlayer_Number() {
+        return player_Number;
+    }
+
+    public String getPlayer_position() {
+        return player_position;
+    }
+
+    public String getPlayer_DOB() {
+        return player_DOB;
+    }
+
+    public Player() {
+    }
+
+    public Integer getPlayer_Height() {
+        return player_Height;
     }
 }

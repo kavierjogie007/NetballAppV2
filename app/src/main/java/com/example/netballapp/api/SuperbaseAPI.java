@@ -1,6 +1,7 @@
 package com.example.netballapp.api;
 
 import com.example.netballapp.Model.Coach;
+import com.example.netballapp.Model.Court;
 import com.example.netballapp.Model.Game;
 import com.example.netballapp.Model.Player;
 
@@ -83,4 +84,10 @@ public interface SuperbaseAPI {
         @Headers({"Prefer: return=representation"})
         Call<List<Game>> setUpNewGame(
                 @Body Game game);
+
+        @POST("rest/v1/court")
+        @Headers({"Prefer: return=representation", "Content-Type: application/json"})
+        Call<List<Court>> assignPlayerToCourt(
+                @Body Court assignment);
 }
+
