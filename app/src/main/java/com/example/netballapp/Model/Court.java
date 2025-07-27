@@ -1,14 +1,16 @@
 package com.example.netballapp.Model;
 
-public class Court {
-    private String court_PositionField;
-    private Long player_ID;
-    private Long game_ID;
+public class Court
+{
+    public Long court_ID;
+    public String court_position_field;
+    public Long player_id;
+    public Long game_id;
 
-    public Court(String positionField, Long player_ID, Long game_ID) {
-        this.court_PositionField = positionField;
-        this.player_ID = player_ID;
-        this.game_ID = game_ID;
+    public Court(String positionField, Long game_ID,Long player_ID) {
+        this.court_position_field = positionField;
+        this.player_id = player_ID;
+        this.game_id = game_ID;
     }
 
     // Getters and setters if needed

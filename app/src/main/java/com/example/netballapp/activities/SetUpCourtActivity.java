@@ -53,6 +53,7 @@ public class SetUpCourtActivity extends AppCompatActivity {
         lstPlayers.setLayoutManager(new LinearLayoutManager(this));
 
         api = RetrofitClient.getClient().create(SuperbaseAPI.class);
+
         // Set position click listeners
         posGA.setOnClickListener(v -> assignPlayerToPosition("court_goalAttack"));
         posGS.setOnClickListener(v -> assignPlayerToPosition("court_goalScore"));
@@ -60,33 +61,62 @@ public class SetUpCourtActivity extends AppCompatActivity {
         posWA.setOnClickListener(v -> assignPlayerToPosition("court_WingAttack"));
         posWD.setOnClickListener(v -> assignPlayerToPosition("court_WingDefence"));
         posGD.setOnClickListener(v -> assignPlayerToPosition("court_Defence"));
-        posGK.setOnClickListener(v -> assignPlayerToPosition("court_Defence"));
+        posGK.setOnClickListener(v -> assignPlayerToPosition("court_GoalKeeper"));
 
         // Fetch players
         loadPlayersFromSupabase();
     }
 
     private void assignPlayerToPosition(String positionField) {
-        if (selectedPlayer == null) {
+        if (selectedPlayer == null)
+        {
             Toast.makeText(this, "Please select a player first.", Toast.LENGTH_SHORT).show();
             return;
         }
 
         // Create a request to send to your Supabase API
-        Court assignment = new Court(positionField, selectedPlayer.getPlayer_ID(), /*currentGameId*/2L);
+        Court assignment = new Court(positionField, /*currentGameId*/35L,selectedPlayer.getPlayer_ID());
 
         Call<List<Court>> call = api.assignPlayerToCourt(assignment);
-        call.enqueue(new Callback<List<Court>>() {
+        call.enqueue(new Callback<List<Court>>()
+        {
             @Override
             public void onResponse(Call<List<Court>> call, Response<List<Court>> response) {
                 if (response.isSuccessful() && response.body() != null) {
+                    String playerName = selectedPlayer.getPlayer_FirstName() + " " + selectedPlayer.getPlayer_Surname();
+
+                    switch (positionField) {
+                        case "court_goalAttack":
+                            posGA.setText(playerName);
+                            break;
+                        case "court_goalScore":
+                            posGS.setText(playerName);
+                            break;
+                        case "court_centre":
+                            posC.setText(playerName);
+                            break;
+                        case "court_WingAttack":
+                            posWA.setText(playerName);
+                            break;
+                        case "court_WingDefence":
+                            posWD.setText(playerName);
+                            break;
+                        case "court_Defence":
+                            posGD.setText(playerName);
+                            break;
+                        case "court_GoalKeeper":
+                            posGK.setText(playerName);
+                            break;
+                    }
+
                     Toast.makeText(SetUpCourtActivity.this, "Player assigned to " + positionField, Toast.LENGTH_SHORT).show();
                     selectedPlayer = null;
+
                 } else {
                     Toast.makeText(SetUpCourtActivity.this, "Assignment failed: " + response.code(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SetUpCourtActivity.this, ""+selectedPlayer.getPlayer_ID(), Toast.LENGTH_SHORT).show();
                 }
             }
-
             @Override
             public void onFailure(Call<List<Court>> call, Throwable t) {
                 Toast.makeText(SetUpCourtActivity.this, "API error: " + t.getMessage(), Toast.LENGTH_LONG).show();
@@ -108,16 +138,15 @@ public class SetUpCourtActivity extends AppCompatActivity {
                     });
                     lstPlayers.setAdapter(adapter);
 
-                } else {
+                } else
+                {
                     Toast.makeText(SetUpCourtActivity.this, "Failed to load players", Toast.LENGTH_SHORT).show();
-                    Log.e("Supabase", "Response error: " + response.code());
                 }
             }
 
             @Override
             public void onFailure(Call<List<Player>> call, Throwable t) {
                 Toast.makeText(SetUpCourtActivity.this, "Error: " + t.getMessage(), Toast.LENGTH_LONG).show();
-                Log.e("Supabase", "API call failed: ", t);
             }
         });
     }

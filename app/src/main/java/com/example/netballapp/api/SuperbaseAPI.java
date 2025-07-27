@@ -86,8 +86,9 @@ public interface SuperbaseAPI {
                 @Body Game game);
 
         @POST("rest/v1/court")
-        @Headers({"Prefer: return=representation", "Content-Type: application/json"})
+        @Headers({"Prefer: resolution=merge-duplicates", "Prefer: return=representation"})
         Call<List<Court>> assignPlayerToCourt(
                 @Body Court assignment);
+
 }
 
