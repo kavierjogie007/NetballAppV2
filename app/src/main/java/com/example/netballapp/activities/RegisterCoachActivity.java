@@ -72,12 +72,7 @@ public class RegisterCoachActivity extends AppCompatActivity {
             return;
         }
 
-        Coach coach = new Coach();
-        coach.coach_firstname = firstName;
-        coach.coach_surname = surname;
-        coach.coach_username = username;
-        coach.coach_password = password;
-        coach.coach_role = role;
+        Coach coach = new Coach(firstName,surname,role,username,password);
 
         Call<List<Coach>> call = api.registerCoach(coach);
         call.enqueue(new Callback<List<Coach>>() {
@@ -89,7 +84,7 @@ public class RegisterCoachActivity extends AppCompatActivity {
 
                     getSharedPreferences("MyAppPrefs", MODE_PRIVATE)
                             .edit()
-                            .putLong("coach_ID", savedCoach.coach_ID)
+                            .putLong("coach_ID", savedCoach.getCoach_ID())
                             .apply();
 
                     Intent intent = new Intent(RegisterCoachActivity.this, DashboardActivity.class);

@@ -4,38 +4,52 @@ import com.google.gson.annotations.SerializedName;
 
 public class Game {
     @SerializedName("game_ID")
-    public Long game_ID;
+    private Long game_ID;
 
     @SerializedName("game_name")
-    public String game_Name;
+    private String game_Name;
 
     @SerializedName("game_opposition_name")
-    public String game_OppositionName;
+    private String game_OppositionName;
 
     @SerializedName("game_venue")
-    public String game_Venue;
+    private String game_Venue;
 
     @SerializedName("game_date")
-    public String game_Date;
+    private String game_Date;
 
     @SerializedName("game_type")
-    public String game_Type;
+    private String game_Type;
 
     @SerializedName("game_bench_positions")
-    public Integer game_BenchPositions;
+    private Integer game_BenchPositions;
 
     @SerializedName("game_madibaz_score")
-    public Integer game_MadibazScore;
+    private Integer game_MadibazScore;
 
     @SerializedName("game_opposition_score")
-    public Integer game_OppositionScore;
+    private Integer game_OppositionScore;
 
     @SerializedName("game_timer")
-    public Integer game_Timer;
+    private Integer game_Timer;
 
     @SerializedName("game_current_centre_pass_team")
-    public String game_CurrentCentrePassTeam;
+    private String game_CurrentCentrePassTeam;
 
     @SerializedName("game_coach_note")
-    public String game_CoachNote;
+    private String game_CoachNote;
+
+    public Game(String game_Name, String game_OppositionName, String game_Venue, String game_Date, String game_Type, Integer game_BenchPositions, Integer game_MadibazScore, Integer game_OppositionScore, Integer game_Timer, String game_CurrentCentrePassTeam, String game_CoachNote) {
+        this.game_Name = game_Name;
+        this.game_OppositionName = game_OppositionName;
+        this.game_Venue = game_Venue;
+        this.game_Date = game_Date;
+        this.game_Type = game_Type;
+        this.game_BenchPositions = game_BenchPositions;
+        this.game_MadibazScore = game_MadibazScore;
+        this.game_OppositionScore = game_OppositionScore;
+        this.game_Timer = game_Timer;
+        this.game_CurrentCentrePassTeam = game_CurrentCentrePassTeam;
+        this.game_CoachNote = game_CoachNote;
+    }
 }

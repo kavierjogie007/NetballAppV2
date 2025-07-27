@@ -4,31 +4,37 @@ import com.google.gson.annotations.SerializedName;
 
 public class Player {
     @SerializedName("player_ID")
-    public Long player_ID;
+    private Long player_ID;
 
     @SerializedName("player_firstname")
-    public String player_FirstName;
+    private String player_FirstName;
 
+    @SerializedName("player_surname")
+    private String player_Surname;
+
+    @SerializedName("player_number")
+    private Integer player_Number;
+    @SerializedName("player_position")
+    private String player_position;
+
+    @SerializedName("player_dob")
+    private String player_DOB;
+
+    @SerializedName("player_height")
+    private Integer player_Height;
+
+    public Player(String player_FirstName, String player_Surname, Integer player_Number, String player_position, String player_DOB, Integer player_Height) {
+        this.player_FirstName = player_FirstName;
+        this.player_Surname = player_Surname;
+        this.player_Number = player_Number;
+        this.player_position = player_position;
+        this.player_DOB = player_DOB;
+        this.player_Height = player_Height;
+    }
     public Player(String player_FirstName, String player_Surname) {
         this.player_FirstName = player_FirstName;
         this.player_Surname = player_Surname;
     }
-
-    @SerializedName("player_surname")
-    public String player_Surname;
-
-    @SerializedName("player_number")
-    public Integer player_Number;
-
-    @SerializedName("player_position")
-    public String player_position;
-
-    @SerializedName("player_dob")
-    public String player_DOB;
-
-    @SerializedName("player_height")
-    public Integer player_Height;
-
     public String getPlayer_FirstName() {
         return player_FirstName;
     }
@@ -53,8 +59,6 @@ public class Player {
         return player_DOB;
     }
 
-    public Player() {
-    }
 
     public Integer getPlayer_Height() {
         return player_Height;

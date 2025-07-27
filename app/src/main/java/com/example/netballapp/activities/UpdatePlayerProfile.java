@@ -70,12 +70,12 @@ public class UpdatePlayerProfile extends AppCompatActivity
             public void onResponse(Call<List<Player>> call, Response<List<Player>> response) {
                 if (response.isSuccessful() && response.body() != null && !response.body().isEmpty()) {
                     Player player = response.body().get(0);
-                    edtFirstName.setText(player.player_FirstName);
-                    edtSurname.setText(player.player_Surname);
-                    edtPlayerNumber.setText(String.valueOf(player.player_Number));
-                    edtDOB.setText(player.player_DOB);
-                    edtHeight.setText(String.valueOf(player.player_Height));
-                    int spinnerIndex = adapter.getPosition(player.player_position);
+                    edtFirstName.setText(player.getPlayer_FirstName());
+                    edtSurname.setText(player.getPlayer_Surname());
+                    edtPlayerNumber.setText(String.valueOf(player.getPlayer_Number()));
+                    edtDOB.setText(player.getPlayer_DOB());
+                    edtHeight.setText(String.valueOf(player.getPlayer_Height()));
+                    int spinnerIndex = adapter.getPosition(player.getPlayer_position());
                     spinnerPosition.setSelection(spinnerIndex);
                 } else {
                     Toast.makeText(UpdatePlayerProfile.this, "Player profile not found", Toast.LENGTH_SHORT).show();
@@ -111,13 +111,7 @@ public class UpdatePlayerProfile extends AppCompatActivity
             return;
         }
 
-        Player updatedPlayer = new Player();
-        updatedPlayer.player_FirstName = firstname;
-        updatedPlayer.player_Surname = surname;
-        updatedPlayer.player_Number = playerNumber;
-        updatedPlayer.player_position = position;
-        updatedPlayer.player_DOB = dob;
-        updatedPlayer.player_Height=height;
+        Player updatedPlayer = new Player(firstname,surname,playerNumber,position,dob,height);
 
         Call<List<Player>> call = api.updatePlayerProfile("eq." + currentPlayerId, updatedPlayer);
         call.enqueue(new Callback<List<Player>>() {

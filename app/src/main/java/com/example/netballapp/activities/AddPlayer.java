@@ -92,13 +92,7 @@ public class AddPlayer extends AppCompatActivity
             return;
         }
 
-        Player player = new Player();
-        player.player_FirstName=firstName;
-        player.player_Surname=surname;
-        player.player_Number=playerNumber;
-        player.player_DOB=dateOfBirth;
-        player.player_Height=height;
-        player.player_position = position;
+        Player player= new Player(firstName,surname,playerNumber,position,dateOfBirth,height);
 
         Call<List<Player>> call = api.registerPlayer(player);
         call.enqueue(new Callback<List<Player>>() {

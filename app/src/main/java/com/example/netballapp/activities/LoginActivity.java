@@ -49,7 +49,7 @@ public class LoginActivity extends AppCompatActivity {
                     // Save coach ID
                     getSharedPreferences("MyAppPrefs", MODE_PRIVATE)
                             .edit()
-                            .putLong("coach_ID", coach.coach_ID)
+                            .putLong("coach_ID", coach.getCoach_ID())
                             .apply();
 
                     Toast.makeText(LoginActivity.this, "Login successful!", Toast.LENGTH_SHORT).show();

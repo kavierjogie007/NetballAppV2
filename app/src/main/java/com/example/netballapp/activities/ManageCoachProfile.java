@@ -67,13 +67,13 @@ public class ManageCoachProfile extends AppCompatActivity {
             public void onResponse(Call<List<Coach>> call, Response<List<Coach>> response) {
                 if (response.isSuccessful() && response.body() != null && !response.body().isEmpty()) {
                     Coach coach = response.body().get(0);
-                    edtFirstName.setText(coach.coach_firstname);
-                    edtSurname.setText(coach.coach_surname);
-                    edtUsername.setText(coach.coach_username);
-                    edtPassword.setText(coach.coach_password);
-                    edtConfirmPassword.setText(coach.coach_password);
+                    edtFirstName.setText(coach.getCoach_firstname());
+                    edtSurname.setText(coach.getCoach_surname());
+                    edtUsername.setText(coach.getCoach_username());
+                    edtPassword.setText(coach.getCoach_password());
+                    edtConfirmPassword.setText(coach.getCoach_password());
 
-                    int spinnerPosition = adapter.getPosition(coach.coach_role);
+                    int spinnerPosition = adapter.getPosition(coach.getCoach_role());
                     spinnerRole.setSelection(spinnerPosition);
                 } else {
                     Toast.makeText(ManageCoachProfile.this, "Coach profile not found", Toast.LENGTH_SHORT).show();
@@ -99,12 +99,7 @@ public class ManageCoachProfile extends AppCompatActivity {
             return;
         }
 
-        Coach updatedCoach = new Coach();
-        updatedCoach.coach_firstname = firstname;
-        updatedCoach.coach_surname = surname;
-        updatedCoach.coach_role = role;
-        updatedCoach.coach_username = username;
-        updatedCoach.coach_password = password;
+        Coach updatedCoach = new Coach(firstname,surname,role,username,password);
 
         Call<List<Coach>> call = api.updateCoachProfile("eq." + currentCoachId, updatedCoach);
         call.enqueue(new Callback<List<Coach>>() {

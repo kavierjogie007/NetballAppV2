@@ -78,20 +78,7 @@ public class SetUpNewGameActivity extends AppCompatActivity {
             return;
         }
 
-        Game game = new Game();
-        game.game_Name=gameName;
-        game.game_OppositionName =oppositionName;
-        game.game_Date=gameDate;
-        game.game_Venue=gameVenue;
-        game.game_BenchPositions =benchPositions;
-        game.game_Type=gameType;
-
-        // Default values for missing fields:
-        game.game_MadibazScore = 0;
-        game.game_OppositionScore = 0;
-        game.game_Timer = 0;
-        game.game_CurrentCentrePassTeam = "f";
-        game.game_CoachNote = "f";
+        Game game = new Game(gameName,oppositionName,gameVenue,gameDate,gameType,benchPositions,0,0,0,"","");
 
         Call<List<Game>> call = api.setUpNewGame(game);
         call.enqueue(new Callback<List<Game>>() {
