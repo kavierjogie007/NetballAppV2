@@ -30,7 +30,7 @@ public class LoginActivity extends AppCompatActivity {
         edtUsername = findViewById(R.id.username);
         edtPassword = findViewById(R.id.password);
 
-        // Get the Retrofit API instance
+        // Gets Retrofit API instance
         api = RetrofitClient.getClient().create(SuperbaseAPI.class);
     }
 
@@ -38,7 +38,7 @@ public class LoginActivity extends AppCompatActivity {
         String username = edtUsername.getText().toString().trim();
         String password = edtPassword.getText().toString().trim();
 
-        // Call the loginCoach endpoint
+        // Calls loginCoach endpoint
         Call<List<Coach>> call = api.loginCoach("eq." + username, "eq." + password);
         call.enqueue(new Callback<List<Coach>>() {
             @Override

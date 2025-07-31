@@ -229,18 +229,20 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="BACK"
             android:backgroundTint="#888888"
+            android:onClick="onBackClicked"
+            android:text="BACK"
             android:textColor="@android:color/white" />
 
         <Button
-            android:id="@+id/btnStartGame"
+            android:id="@+id/btnNext"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_weight="1"
-            android:text="START GAME"
             android:backgroundTint="#003da5"
+            android:onClick="onNextClicked"
+            android:text="NEXT"
             android:textColor="@android:color/white" />
     </LinearLayout>
 

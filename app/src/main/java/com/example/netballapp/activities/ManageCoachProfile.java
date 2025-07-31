@@ -37,11 +37,10 @@ public class ManageCoachProfile extends AppCompatActivity {
 
         if (currentCoachId == -1) {
             Toast.makeText(this, "Coach ID not found. Please log in again.", Toast.LENGTH_SHORT).show();
-            finish(); // Optionally redirect to login screen
+            finish();
             return;
         }
 
-        //Set up UI
         edtFirstName = findViewById(R.id.edtFirstName);
         edtSurname = findViewById(R.id.edtSurname);
         edtUsername = findViewById(R.id.edtUsername);

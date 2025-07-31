@@ -85,7 +85,16 @@ public class SetUpNewGameActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<Game>> call, Response<List<Game>> response) {
                 if (response.isSuccessful()) {
+                    Game savedGame=response.body().get(0);
                     Toast.makeText(SetUpNewGameActivity.this, "Set Up New Game successful!", Toast.LENGTH_SHORT).show();
+
+                    // Save coach ID
+                    getSharedPreferences("MyAppPrefs", MODE_PRIVATE)
+                            .edit()
+                            .putLong("game_ID", savedGame.getGame_ID())
+                            .putInt("game_BenchPlayers",savedGame.getGame_BenchPositions())
+                            .apply();
+
                     Intent intent = new Intent(SetUpNewGameActivity.this, SetUpCourtActivity.class);
                     startActivity(intent);
                    finish();

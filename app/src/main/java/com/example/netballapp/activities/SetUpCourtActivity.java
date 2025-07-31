@@ -6,8 +6,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,12 +35,22 @@ public class SetUpCourtActivity extends AppCompatActivity {
     private RecyclerView lstPlayers;
     private SuperbaseAPI api;
     private Player selectedPlayer;
+    private long currentGameId;
     TextView posGA, posGS, posC, posWA, posWD, posGD, posGK;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_up_court);
 
+        // Retrieve coach ID from SharedPreferences
+        currentGameId = getSharedPreferences("MyAppPrefs", MODE_PRIVATE)
+                .getLong("game_ID", -1);
+
+        if (currentGameId == -1) {
+            Toast.makeText(this, "Game ID not found.", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
         lstPlayers = findViewById(R.id.lstPlayers);
         posGA = findViewById(R.id.posGA);
         posGS = findViewById(R.id.posGS);
@@ -75,7 +87,7 @@ public class SetUpCourtActivity extends AppCompatActivity {
         }
 
         // Create a request to send to your Supabase API
-        Court assignment = new Court(positionField, /*currentGameId*/35L,selectedPlayer.getPlayer_ID());
+        Court assignment = new Court(positionField, currentGameId,selectedPlayer.getPlayer_ID());
 
         Call<List<Court>> call = api.assignPlayerToCourt(assignment);
         call.enqueue(new Callback<List<Court>>()
@@ -110,6 +122,9 @@ public class SetUpCourtActivity extends AppCompatActivity {
                     }
 
                     Toast.makeText(SetUpCourtActivity.this, "Player assigned to " + positionField, Toast.LENGTH_SHORT).show();
+
+                    // Remove player from list
+                    adapter.removePlayer(selectedPlayer);
                     selectedPlayer = null;
 
                 } else {
@@ -149,5 +164,17 @@ public class SetUpCourtActivity extends AppCompatActivity {
                 Toast.makeText(SetUpCourtActivity.this, "Error: " + t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    public void onBackClicked(View view) {
+        Intent intent = new Intent(SetUpCourtActivity.this, SetUpNewGameActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    public void onNextClicked(View view) {
+        Intent intent = new Intent(SetUpCourtActivity.this, SetBenchPlayersActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

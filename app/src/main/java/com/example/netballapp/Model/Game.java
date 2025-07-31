@@ -52,4 +52,12 @@ public class Game {
         this.game_CurrentCentrePassTeam = game_CurrentCentrePassTeam;
         this.game_CoachNote = game_CoachNote;
     }
+
+    public Long getGame_ID() {
+        return game_ID;
+    }
+
+    public Integer getGame_BenchPositions() {
+        return game_BenchPositions;
+    }
 }
