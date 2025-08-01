@@ -17,9 +17,9 @@ import retrofit2.http.PATCH;
 import retrofit2.http.Query;
 import retrofit2.http.POST;
 
-// SupabaseApi interface defines API endpoints for the Supabase API
+// Supabase Api interface defines API endpoints for the Supabase API
 //Retrofit annotations are used to define the HTTP methods and parameters
-//The methods defined in this interface will be used to make API calls
+//The methods defined in this interface are used to make API calls
 public interface SuperbaseAPI {
     //	@GET	Read data
     //  @POST	Create (insert)
@@ -27,22 +27,23 @@ public interface SuperbaseAPI {
     //	@PUT	Full update (replace)
 
     //Coach table
+    //Updates coach where coach_ID matches
     @PATCH("rest/v1/coach")
-    @Headers({"Prefer: return=representation"})
+    @Headers({"Prefer: return=representation"}) //Returns the full updated row in the response body
     Call<List<Coach>> updateCoachProfile(
             @Query("coach_ID") String idFilter,
             @Body Coach updatedCoach);
 
-    // GET coach by ID
+    // GET coach by their ID
     @GET("rest/v1/coach")
     Call<List<Coach>> getCoachById(
             @Query("coach_ID") String idFilter);
 
-    @GET("rest/v1/coach")
-//Calls the coach table
+
+    @GET("rest/v1/coach")//Calls the coach table
     Call<List<Coach>> loginCoach(
-            @Query("coach_username") String username, //Adds coach_username=eq.john to URL
-            @Query("coach_password") String password); // Adds coach_password=eq.john to URL
+            @Query("coach_username") String username, //Adds coach_username   =eq.john to URL
+            @Query("coach_password") String password); // Adds coach_password =eq.john to URL
 
     @POST("rest/v1/coach")
     @Headers({"Prefer: return=representation"})
@@ -51,7 +52,6 @@ public interface SuperbaseAPI {
 
     //Player table
     @GET("rest/v1/player")
-    // Table name
     Call<List<Player>> getPlayers(
             @Query("select") String select //first part of query (select, update, insert, etc.)
     );
@@ -73,7 +73,7 @@ public interface SuperbaseAPI {
             @Body Player updatedPlayer);
 
     @DELETE("rest/v1/player")
-    @Headers("Prefer: return=minimal")
+    @Headers("Prefer: return=minimal") //Returns empty response
     Call<Void> deletePlayer(
             @Query("player_ID") String idFilter);
 

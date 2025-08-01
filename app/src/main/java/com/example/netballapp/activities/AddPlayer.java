@@ -105,7 +105,6 @@ public class AddPlayer extends AppCompatActivity
                     Toast.makeText(AddPlayer.this, response.toString(), Toast.LENGTH_SHORT).show();
                 }
             }
-
             @Override
             public void onFailure(Call<List<Player>> call, Throwable t) {
                 Toast.makeText(AddPlayer.this, "Error: " + t.getMessage(), Toast.LENGTH_LONG).show();

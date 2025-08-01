@@ -40,6 +40,7 @@ public class LoginActivity extends AppCompatActivity {
 
         // Calls loginCoach endpoint
         Call<List<Coach>> call = api.loginCoach("eq." + username, "eq." + password);
+
         call.enqueue(new Callback<List<Coach>>() {
             @Override
             public void onResponse(Call<List<Coach>> call, Response<List<Coach>> response) {
