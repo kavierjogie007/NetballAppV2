@@ -5,11 +5,10 @@ import okhttp3.Request;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-/**
- * SupabaseClient class to create a Retrofit client
- * Essentially, this class is a singleton class that creates a Retrofit client
- * If one is already created, it will return the existing one
- */
+/*
+SupabaseClient class to create a Retrofit client
+This class  creates a Retrofit client if one is already created, it will return the existing one
+*/
 
 public class RetrofitClient {
     private static Retrofit retrofit = null;
@@ -38,5 +37,4 @@ public class RetrofitClient {
                 })
                .build();
  }
- //test
 }

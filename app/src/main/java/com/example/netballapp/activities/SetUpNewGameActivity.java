@@ -66,7 +66,6 @@ public class SetUpNewGameActivity extends AppCompatActivity {
             try {
                 benchPositions = Integer.parseInt(strBenchPositions);
             } catch (NumberFormatException e) {
-                // Handle the case where input is not a valid number
                 Toast.makeText(this, "Please enter a valid bench Position", Toast.LENGTH_SHORT).show();
             }
         } else {
@@ -88,7 +87,7 @@ public class SetUpNewGameActivity extends AppCompatActivity {
                     Game savedGame=response.body().get(0);
                     Toast.makeText(SetUpNewGameActivity.this, "Set Up New Game successful!", Toast.LENGTH_SHORT).show();
 
-                    // Save coach ID
+                    // Saves coach ID
                     getSharedPreferences("MyAppPrefs", MODE_PRIVATE)
                             .edit()
                             .putLong("game_ID", savedGame.getGame_ID())

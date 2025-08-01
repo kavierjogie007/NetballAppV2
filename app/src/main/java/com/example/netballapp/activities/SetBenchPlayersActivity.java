@@ -37,14 +37,10 @@ public class SetBenchPlayersActivity extends AppCompatActivity {
             benchLabel.setText("Bench " + (i + 1));
             benchLabel.setTextSize(20); // bigger text
             benchLabel.setTextColor(Color.BLACK);
-            benchLabel.setPadding(24, 24, 24, 24); // more internal space
+            benchLabel.setPadding(24, 24, 24, 24);
 
-            // Optional: Make height bigger
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT,
-                    160 // increased height in pixels
-            );
-            params.setMargins(0, 16, 0, 16); // more space between benches
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 160);
+            params.setMargins(0, 16, 0, 16);
             benchLabel.setLayoutParams(params);
 
             benchLabel.setBackgroundResource(R.drawable.bench_label_bg);

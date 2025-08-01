@@ -53,10 +53,10 @@ public class ManageCoachProfile extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerRole.setAdapter(adapter);
 
-        // Get the Retrofit API instance
+        // Gets the Retrofit API instance
         api = RetrofitClient.getClient().create(SuperbaseAPI.class);
 
-        // Load coach profile using Retrofit
+        // Loads coach profile using Retrofit
         loadCoachProfile(adapter);
     }
     private void loadCoachProfile(ArrayAdapter<String> adapter) {
@@ -121,6 +121,6 @@ public class ManageCoachProfile extends AppCompatActivity {
     public void onBackClicked(View view) {
         Intent intent = new Intent(ManageCoachProfile.this, DashboardActivity.class);
         startActivity(intent);
-        finish(); // Finish LoginActivity so it's not in the back stack
+        finish();
     }
 }

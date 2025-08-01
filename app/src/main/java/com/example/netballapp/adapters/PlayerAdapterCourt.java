@@ -46,7 +46,7 @@ public class PlayerAdapterCourt extends RecyclerView.Adapter<PlayerAdapterCourt.
 
         // Highlight selected item
         if (selectedPosition == position) {
-            holder.itemView.setBackgroundColor(ContextCompat.getColor(context, R.color.highlight)); // Or use your highlight color
+            holder.itemView.setBackgroundColor(ContextCompat.getColor(context, R.color.highlight));
         } else {
             holder.itemView.setBackgroundColor(Color.TRANSPARENT);
         }
@@ -83,14 +83,11 @@ public class PlayerAdapterCourt extends RecyclerView.Adapter<PlayerAdapterCourt.
             playerList.remove(index);
             notifyItemRemoved(index);
 
-            // Reset selection if necessary
             if (selectedPosition == index) {
                 selectedPosition = RecyclerView.NO_POSITION;
             } else if (selectedPosition > index) {
-                selectedPosition--; // Adjust index if it came after the removed item
+                selectedPosition--;
             }
         }
     }
-
-
 }

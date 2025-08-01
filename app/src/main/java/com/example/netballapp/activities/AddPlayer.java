@@ -31,7 +31,6 @@ public class AddPlayer extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_player);
 
-        //testing1
         edtFirstName = findViewById(R.id.edtFirstName);
         edtSurname = findViewById(R.id.edtSurname);
         edtPlayerNumber = findViewById(R.id.edtPlayerNumber);
@@ -68,7 +67,6 @@ public class AddPlayer extends AppCompatActivity
             try {
                 playerNumber = Integer.parseInt(strPlayerNumber);
             } catch (NumberFormatException e) {
-                // Handle the case where input is not a valid number
                 Toast.makeText(this, "Please enter a valid player Number", Toast.LENGTH_SHORT).show();
             }
         } else {
@@ -80,7 +78,6 @@ public class AddPlayer extends AppCompatActivity
             try {
                 height = Integer.parseInt(strHeight);
             } catch (NumberFormatException e) {
-                // Handle the case where input is not a valid number
                 Toast.makeText(this, "Please enter a valid height", Toast.LENGTH_SHORT).show();
             }
         } else {

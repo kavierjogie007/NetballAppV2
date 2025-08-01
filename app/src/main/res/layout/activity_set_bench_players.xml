@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:background="@android:color/darker_gray">
 
-    <!-- Top Bar -->
     <LinearLayout
         android:id="@+id/topBar"
         android:layout_width="0dp"
@@ -39,7 +38,6 @@
             android:textStyle="bold" />
     </LinearLayout>
 
-    <!-- Content Container -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/contentContainer"
         android:layout_width="0dp"
@@ -49,7 +47,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <!-- Bench Area -->
         <ScrollView
             android:id="@+id/scrollBenchArea"
             android:layout_width="0dp"
@@ -70,7 +67,6 @@
                 android:background="#e0f0ff" />
         </ScrollView>
 
-        <!-- Player List -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/lstPlayers"
             android:layout_width="0dp"
@@ -82,7 +78,6 @@
             app:layout_constraintEnd_toEndOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <!-- Bottom Buttons -->
     <LinearLayout
         android:id="@+id/buttonGroup"
         android:layout_width="0dp"

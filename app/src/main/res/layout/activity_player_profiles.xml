@@ -5,7 +5,6 @@
     android:layout_height="match_parent"
     android:background="#FFFFFF">
 
-    <!-- Top Bar -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="56dp"
@@ -31,7 +30,6 @@
             android:backgroundTint="#033E8C" />
     </LinearLayout>
 
-    <!-- ListView -->
     <ListView
         android:id="@+id/playerListView"
         android:layout_width="match_parent"
@@ -40,7 +38,6 @@
         android:divider="#cccccc"
         android:dividerHeight="1dp" />
 
-    <!-- Buttons -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

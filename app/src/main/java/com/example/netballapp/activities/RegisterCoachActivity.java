@@ -79,7 +79,7 @@ public class RegisterCoachActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<Coach>> call, Response<List<Coach>> response) {
                 if (response.isSuccessful() && response.body() != null && !response.body().isEmpty()) {
-                    Coach savedCoach = response.body().get(0); // ✅ Use the returned coach
+                    Coach savedCoach = response.body().get(0); //The returned coach
                     Toast.makeText(RegisterCoachActivity.this, "Registration successful!", Toast.LENGTH_SHORT).show();
 
                     getSharedPreferences("MyAppPrefs", MODE_PRIVATE)

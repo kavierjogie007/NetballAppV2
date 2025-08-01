@@ -46,7 +46,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (response.isSuccessful() && response.body() != null && !response.body().isEmpty()) {
                     Coach coach = response.body().get(0);
 
-                    // Save coach ID
+                    // Saves coach ID
                     getSharedPreferences("MyAppPrefs", MODE_PRIVATE)
                             .edit()
                             .putLong("coach_ID", coach.getCoach_ID())

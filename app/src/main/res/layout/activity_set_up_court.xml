@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:background="@android:color/darker_gray">
 
-    <!-- Title bar -->
     <LinearLayout
         android:id="@+id/topBar"
         android:layout_width="0dp"
@@ -39,7 +38,6 @@
             android:textStyle="bold" />
     </LinearLayout>
 
-    <!-- Container for court and player list -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/contentContainer"
         android:layout_width="0dp"
@@ -48,10 +46,6 @@
         app:layout_constraintBottom_toTopOf="@+id/buttonGroup"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
-
-        <!-- Court on the left -->
-
-        <!-- Player List on the right -->
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/court"
@@ -67,7 +61,6 @@
             app:layout_constraintVertical_bias="0.5"
             app:layout_constraintWidth_percent="0.6">
 
-            <!-- Center circle -->
             <View
                 android:layout_width="0dp"
                 android:layout_height="0dp"
@@ -79,7 +72,6 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintWidth_percent="0.2" />
 
-            <!-- Top half circle -->
             <View
                 android:layout_width="0dp"
                 android:layout_height="0dp"
@@ -90,7 +82,6 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintWidth_percent="0.4" />
 
-            <!-- Bottom half circle -->
             <View
                 android:layout_width="0dp"
                 android:layout_height="0dp"
@@ -101,7 +92,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintWidth_percent="0.4" />
 
-            <!-- GS -->
             <TextView
                 android:id="@+id/posGS"
                 style="@style/PlayerPosition"
@@ -118,7 +108,6 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.05" />
 
-            <!-- GA -->
             <TextView
                 android:id="@+id/posGA"
                 style="@style/PlayerPosition"
@@ -131,7 +120,6 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.22" />
 
-            <!-- WA -->
             <TextView
                 android:id="@+id/posWA"
                 style="@style/PlayerPosition"
@@ -144,7 +132,6 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.30" />
 
-            <!-- C -->
             <TextView
                 android:id="@+id/posC"
                 style="@style/PlayerPosition"
@@ -157,7 +144,6 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.50" />
 
-            <!-- WD -->
             <TextView
                 android:id="@+id/posWD"
                 style="@style/PlayerPosition"
@@ -170,7 +156,6 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.65" />
 
-            <!-- GD -->
             <TextView
                 android:id="@+id/posGD"
                 style="@style/PlayerPosition"
@@ -183,7 +168,6 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.78" />
 
-            <!-- GK -->
             <TextView
                 android:id="@+id/posGK"
                 style="@style/PlayerPosition"
@@ -198,7 +182,6 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/lstPlayers"
             android:layout_width="0dp"
@@ -212,7 +195,6 @@
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <!-- Button group at the bottom -->
     <LinearLayout
         android:id="@+id/buttonGroup"
         android:layout_width="0dp"

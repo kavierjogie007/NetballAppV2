@@ -5,7 +5,6 @@
     android:layout_height="match_parent"
     android:background="@android:color/white">
 
-    <!-- Top Bar -->
     <LinearLayout
         android:id="@+id/topBar"
         android:layout_width="0dp"
@@ -40,7 +39,6 @@
             android:textStyle="bold" />
     </LinearLayout>
 
-    <!-- First Name -->
     <TextView
         android:id="@+id/labelFirstName"
         android:layout_width="wrap_content"
@@ -65,7 +63,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Surname -->
     <TextView
         android:id="@+id/labelSurname"
         android:layout_width="wrap_content"
@@ -90,7 +87,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Player Number -->
     <TextView
         android:id="@+id/labelPlayerNumber"
         android:layout_width="wrap_content"
@@ -115,7 +111,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Position -->
     <TextView
         android:id="@+id/labelPosition"
         android:layout_width="wrap_content"
@@ -138,7 +133,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Date of Birth -->
     <TextView
         android:id="@+id/labelDOB"
         android:layout_width="wrap_content"
@@ -163,7 +157,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Height -->
     <TextView
         android:id="@+id/labelHeight"
         android:layout_width="wrap_content"
@@ -188,7 +181,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Button Row -->
     <LinearLayout
         android:id="@+id/buttonRow"
         android:layout_width="0dp"

@@ -42,7 +42,7 @@ public class SetUpCourtActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_up_court);
 
-        // Retrieve coach ID from SharedPreferences
+        // Retrieves coach ID from SharedPreferences
         currentGameId = getSharedPreferences("MyAppPrefs", MODE_PRIVATE)
                 .getLong("game_ID", -1);
 
@@ -86,7 +86,6 @@ public class SetUpCourtActivity extends AppCompatActivity {
             return;
         }
 
-        // Create a request to send to your Supabase API
         Court assignment = new Court(positionField, currentGameId,selectedPlayer.getPlayer_ID());
 
         Call<List<Court>> call = api.assignPlayerToCourt(assignment);

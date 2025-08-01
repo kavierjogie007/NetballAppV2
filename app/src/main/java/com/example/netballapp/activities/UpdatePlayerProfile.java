@@ -38,11 +38,10 @@ public class UpdatePlayerProfile extends AppCompatActivity
 
         if (currentPlayerId == -1) {
             Toast.makeText(this, "Player ID not found.", Toast.LENGTH_SHORT).show();
-            finish(); // Optionally redirect to login screen
+            finish();
             return;
         }
 
-        //Set up UI
         edtFirstName = findViewById(R.id.edtFirstName);
         edtSurname = findViewById(R.id.edtSurname);
         edtPlayerNumber = findViewById(R.id.edtPlayerNumber);

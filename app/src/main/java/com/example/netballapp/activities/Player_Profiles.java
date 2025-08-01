@@ -36,7 +36,7 @@ public class Player_Profiles extends AppCompatActivity {
         ListView listView = findViewById(R.id.playerListView);
 
         players = new ArrayList<>();
-        //Activity responds
+
         adapter = new PlayerAdapter(this, players, (player, position) ->
                 new AlertDialog.Builder(Player_Profiles.this)
                 .setTitle("Confirm Deletion")
@@ -50,7 +50,7 @@ public class Player_Profiles extends AppCompatActivity {
 
         api = RetrofitClient.getClient().create(SuperbaseAPI.class);
 
-        Call<List<Player>> call = api.getPlayers("*"); // Select all columns
+        Call<List<Player>> call = api.getPlayers("*"); // Selects all columns
         call.enqueue(new Callback<List<Player>>() {
             @Override
             public void onResponse(Call<List<Player>> call, Response<List<Player>> response) {
@@ -95,12 +95,12 @@ public class Player_Profiles extends AppCompatActivity {
     {
         Intent intent = new Intent(Player_Profiles.this, DashboardActivity.class);
         startActivity(intent);
-        finish(); // Finish LoginActivity so it's not in the back stack
+        finish();
     }
 
     public void onAddPlayerClicked(View view) {
         Intent intent = new Intent(Player_Profiles.this, AddPlayer.class);
         startActivity(intent);
-        finish(); // Finish LoginActivity so it's not in the back stack
+        finish();
     }
 }
