@@ -13,6 +13,5 @@ public class Court
         this.game_id = game_ID;
     }
 
-    // Getters and setters if needed
 }
 
