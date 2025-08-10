@@ -51,6 +51,7 @@ public class SetUpCourtActivity extends AppCompatActivity {
             finish();
             return;
         }
+
         lstPlayers = findViewById(R.id.lstPlayers);
         posGA = findViewById(R.id.posGA);
         posGS = findViewById(R.id.posGS);
