@@ -29,7 +29,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class SetUpCourtActivity extends AppCompatActivity {
+public class SetUpCourtActivity extends AppCompatActivity
+{
     private List<Player> playerList;
     private PlayerAdapterCourt adapter;
     private RecyclerView lstPlayers;

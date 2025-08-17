@@ -6,11 +6,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.netballapp.Model.Coach;
+import com.example.netballapp.Model.SessionManager;
 import com.example.netballapp.R;
 import com.example.netballapp.api.RetrofitClient;
 import com.example.netballapp.api.SuperbaseAPI;
@@ -23,7 +25,7 @@ import retrofit2.Response;
 
 public class ManageCoachProfile extends AppCompatActivity {
     private EditText edtFirstName, edtSurname, edtUsername, edtPassword, edtConfirmPassword;
-    private Spinner spinnerRole;
+    private AutoCompleteTextView actvRole;
     private long currentCoachId;
     private SuperbaseAPI api;
     @Override
@@ -46,12 +48,12 @@ public class ManageCoachProfile extends AppCompatActivity {
         edtUsername = findViewById(R.id.edtUsername);
         edtPassword = findViewById(R.id.edtPassword);
         edtConfirmPassword = findViewById(R.id.edtConfirmPassword);
-        spinnerRole = findViewById(R.id.spinnerRole);
+        actvRole = findViewById(R.id.actvRole);
 
         String[] roles = {"Head Coach", "Assistant Coach"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,android.R.layout.simple_spinner_item, roles);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerRole.setAdapter(adapter);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
+                R.layout.dropdown_item, roles);
+        actvRole.setAdapter(adapter);
 
         // Gets the Retrofit API instance
         api = RetrofitClient.getClient().create(SuperbaseAPI.class);
@@ -72,8 +74,8 @@ public class ManageCoachProfile extends AppCompatActivity {
                     edtPassword.setText(coach.getCoach_password());
                     edtConfirmPassword.setText(coach.getCoach_password());
 
-                    int spinnerPosition = adapter.getPosition(coach.getCoach_role());
-                    spinnerRole.setSelection(spinnerPosition);
+                    // Set role in AutoCompleteTextView
+                    actvRole.setText(coach.getCoach_role(), false); // 'false' prevents filtering
                 } else {
                     Toast.makeText(ManageCoachProfile.this, "Coach profile not found", Toast.LENGTH_SHORT).show();
                 }
@@ -88,7 +90,7 @@ public class ManageCoachProfile extends AppCompatActivity {
     public void onUpdateProfileClicked(View view) {
         String firstname = edtFirstName.getText().toString().trim();
         String surname = edtSurname.getText().toString().trim();
-        String role = spinnerRole.getSelectedItem().toString();
+        String role = actvRole.getText().toString().trim();
         String username = edtUsername.getText().toString().trim();
         String password = edtPassword.getText().toString().trim();
         String confirmPassword = edtConfirmPassword.getText().toString().trim();
@@ -122,5 +124,9 @@ public class ManageCoachProfile extends AppCompatActivity {
         Intent intent = new Intent(ManageCoachProfile.this, DashboardActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    public void onLogoutClicked(View view) {
+        SessionManager.logout(this);
     }
 }

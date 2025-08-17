@@ -11,6 +11,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.netballapp.Model.Player;
+import com.example.netballapp.Model.SessionManager;
 import com.example.netballapp.adapters.PlayerAdapter;
 import com.example.netballapp.R;
 import com.example.netballapp.api.RetrofitClient;
@@ -102,5 +103,9 @@ public class Player_Profiles extends AppCompatActivity {
         Intent intent = new Intent(Player_Profiles.this, AddPlayer.class);
         startActivity(intent);
         finish();
+    }
+
+    public void onLogoutClicked(View view) {
+        SessionManager.logout(this);
     }
 }

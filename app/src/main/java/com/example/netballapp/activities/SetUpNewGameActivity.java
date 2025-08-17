@@ -7,11 +7,13 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.netballapp.Model.Game;
+import com.example.netballapp.Model.UIUtils;
 import com.example.netballapp.R;
 import com.example.netballapp.api.RetrofitClient;
 import com.example.netballapp.api.SuperbaseAPI;
@@ -24,8 +26,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class SetUpNewGameActivity extends AppCompatActivity {
-    private EditText edtGameName, edtOppositionName, edtGameVenue, edtGameDate,edtBenchPositions;
-    private Spinner spinnerGameType;
+    private EditText edtGameName, edtOppositionName, edtGameVenue, edtGameDate;
+    private AutoCompleteTextView actvGameType;
     private SuperbaseAPI api;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,13 +38,12 @@ public class SetUpNewGameActivity extends AppCompatActivity {
         edtOppositionName = findViewById(R.id.edtOpposition);
         edtGameVenue = findViewById(R.id.edtVenue);
         edtGameDate = findViewById(R.id.edtGameDate);
-        edtBenchPositions = findViewById(R.id.edtBenchPositions);
-        spinnerGameType=findViewById(R.id.spinnerGameType);
+        actvGameType=findViewById(R.id.actvGameType);
 
         String[] gameTypes = {"Friendly", "League", "Tournament"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,android.R.layout.simple_spinner_item, gameTypes);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerGameType.setAdapter(adapter);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
+                R.layout.dropdown_item, gameTypes);
+        actvGameType.setAdapter(adapter);
 
         api = RetrofitClient.getClient().create(SuperbaseAPI.class);
     }
@@ -58,26 +59,15 @@ public class SetUpNewGameActivity extends AppCompatActivity {
         String oppositionName= edtOppositionName.getText().toString().trim();
         String gameDate=edtGameDate.getText().toString().trim();
         String gameVenue=edtGameVenue.getText().toString().trim();
-        String strBenchPositions = edtBenchPositions.getText().toString().trim();
-        String gameType = spinnerGameType.getSelectedItem().toString();
+        String gameType = actvGameType.getText().toString().trim();
 
-        Integer benchPositions = null;
-        if (!strBenchPositions.isEmpty()) {
-            try {
-                benchPositions = Integer.parseInt(strBenchPositions);
-            } catch (NumberFormatException e) {
-                Toast.makeText(this, "Please enter a valid bench Position", Toast.LENGTH_SHORT).show();
-            }
-        } else {
-            Toast.makeText(this, "Bench Position field is empty", Toast.LENGTH_SHORT).show();
-        }
 
         if (gameName.isEmpty() || oppositionName.isEmpty() || gameVenue.isEmpty() || gameDate.isEmpty()) {
             Toast.makeText(this, "Please fill all required fields", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        Game game = new Game(gameName,oppositionName,gameVenue,gameDate,gameType,benchPositions,0,0,0,"","");
+        Game game = new Game(gameName,oppositionName,gameVenue,gameDate,gameType,0,0,0,0,"","");
 
         Call<List<Game>> call = api.setUpNewGame(game);
         call.enqueue(new Callback<List<Game>>() {
@@ -121,5 +111,9 @@ public class SetUpNewGameActivity extends AppCompatActivity {
                 Toast.makeText(SetUpNewGameActivity.this, "Error: " + t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    public void onGameDateClicked(View view) {
+        UIUtils.showFutureDatePicker(this, edtGameDate);
     }
 }

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -23,7 +24,7 @@ import retrofit2.Response;
 
 public class RegisterCoachActivity extends AppCompatActivity {
     private EditText edtFirstName, edtSurname, edtUsername, edtPassword, edtConfirmPassword;
-    private Spinner spinnerRole;
+    private AutoCompleteTextView actvRole;
     private SuperbaseAPI api;
 
     @Override
@@ -36,13 +37,13 @@ public class RegisterCoachActivity extends AppCompatActivity {
         edtUsername = findViewById(R.id.edtUsername);
         edtPassword = findViewById(R.id.edtPassword);
         edtConfirmPassword = findViewById(R.id.edtConfirmPassword);
-        spinnerRole = findViewById(R.id.spinnerRole);
+        actvRole = findViewById(R.id.actvRole);
 
         String[] roles = {"Head Coach", "Assistant Coach"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_spinner_item, roles);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerRole.setAdapter(adapter);
+                R.layout.dropdown_item, roles);
+        actvRole.setAdapter(adapter);
+
 
         api = RetrofitClient.getClient().create(SuperbaseAPI.class);
     }
@@ -60,7 +61,7 @@ public class RegisterCoachActivity extends AppCompatActivity {
         String username = edtUsername.getText().toString().trim();
         String password = edtPassword.getText().toString().trim();
         String confirmPassword = edtConfirmPassword.getText().toString().trim();
-        String role = spinnerRole.getSelectedItem().toString();
+        String role = actvRole.getText().toString().trim();
 
         if (firstName.isEmpty() || username.isEmpty() || password.isEmpty()) {
             Toast.makeText(this, "Please fill all required fields", Toast.LENGTH_SHORT).show();

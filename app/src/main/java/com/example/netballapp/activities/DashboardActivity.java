@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.example.netballapp.Model.SessionManager;
 import com.example.netballapp.R;
 
 public class DashboardActivity extends AppCompatActivity {
@@ -33,4 +34,9 @@ public class DashboardActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+
+    public void onLogoutClicked(View view) {
+        SessionManager.logout(this);
+    }
+
 }

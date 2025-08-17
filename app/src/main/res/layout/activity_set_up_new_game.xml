@@ -1,25 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white">
+    android:background="@android:color/white"
+    android:padding="5dp">
 
+    <!-- Top Bar -->
     <LinearLayout
         android:id="@+id/topBar"
         android:layout_width="0dp"
-        android:layout_height="56dp"
+        android:layout_height="64dp"
         android:background="#011933"
         android:orientation="horizontal"
-        android:paddingHorizontal="12dp"
         android:gravity="center_vertical"
+        android:paddingHorizontal="12dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
         <ImageView
-            android:layout_width="36dp"
-            android:layout_height="36dp"
+            android:id="@+id/profileIcon"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:background="@drawable/circle_bg"
             android:src="@drawable/ic_launcher_foreground"
             android:padding="6dp"
@@ -27,195 +31,167 @@
             app:tint="@android:color/white" />
 
         <TextView
+            android:id="@+id/registerTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Set Up New Game"
             android:textColor="@android:color/white"
-            android:textSize="18sp"
-            android:paddingStart="12dp"
-            android:textStyle="bold" />
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:paddingStart="12dp" />
+
+        <Button
+            android:id="@+id/logoutButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#033E8C"
+            android:onClick="onLogoutClicked"
+            android:paddingHorizontal="12dp"
+            android:text="Logout"
+            android:textColor="@android:color/white"
+            android:textSize="14sp" />
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/labelGameName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Game Name"
-        android:textColor="#000000"
-        android:textSize="14sp"
-        android:layout_marginTop="24dp"
-        android:layout_marginStart="16dp"
+    <!-- Scrollable Form -->
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         app:layout_constraintTop_toBottomOf="@id/topBar"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <EditText
-        android:id="@+id/edtGameName"
-        android:layout_width="0dp"
-        android:layout_height="48dp"
-        android:hint="Enter game name"
-        android:inputType="textCapWords"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        android:text="Test"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/labelGameName" />
-
-    <TextView
-        android:id="@+id/labelOpposition"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Opposition Name"
-        android:textColor="#000000"
-        android:textSize="14sp"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="16dp"
-        app:layout_constraintTop_toBottomOf="@id/edtGameName"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <EditText
-        android:id="@+id/edtOpposition"
-        android:layout_width="0dp"
-        android:layout_height="48dp"
-        android:hint="Enter opposition name"
-        android:inputType="textCapWords"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        android:text="Main"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/labelOpposition" />
-
-    <TextView
-        android:id="@+id/labelGameDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Game Date"
-        android:textColor="#000000"
-        android:textSize="14sp"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="16dp"
-        app:layout_constraintTop_toBottomOf="@id/edtOpposition"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <EditText
-        android:id="@+id/edtGameDate"
-        android:layout_width="0dp"
-        android:layout_height="48dp"
-        android:hint="YYYY-MM-DD"
-        android:inputType="date"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        android:text="2003-05-06"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/labelGameDate" />
-
-    <TextView
-        android:id="@+id/labelVenue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Venue"
-        android:textColor="#000000"
-        android:textSize="14sp"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="16dp"
-        app:layout_constraintTop_toBottomOf="@id/edtGameDate"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <EditText
-        android:id="@+id/edtVenue"
-        android:layout_width="0dp"
-        android:layout_height="48dp"
-        android:hint="Enter venue"
-        android:inputType="textCapWords"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        android:text="Jane"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/labelVenue" />
-
-    <TextView
-        android:id="@+id/labelGameType"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Game Type"
-        android:textColor="#000000"
-        android:textSize="14sp"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="16dp"
-        app:layout_constraintTop_toBottomOf="@id/edtVenue"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Spinner
-        android:id="@+id/spinnerGameType"
-        android:layout_width="0dp"
-        android:layout_height="48dp"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        app:layout_constraintTop_toBottomOf="@id/labelGameType"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <TextView
-        android:id="@+id/labelBenchPositions"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Bench Positions"
-        android:textColor="#000000"
-        android:textSize="14sp"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="16dp"
-        app:layout_constraintTop_toBottomOf="@id/spinnerGameType"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <EditText
-        android:id="@+id/edtBenchPositions"
-        android:layout_width="0dp"
-        android:layout_height="48dp"
-        android:hint="Enter number of bench positions"
-        android:inputType="number"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        android:text="3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/labelBenchPositions" />
-
-    <LinearLayout
-        android:id="@+id/buttonRow"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:layout_marginTop="24dp"
-        app:layout_constraintTop_toBottomOf="@id/edtBenchPositions"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <Button
-            android:id="@+id/btnBack"
-            android:layout_width="0dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_weight="1"
-            android:backgroundTint="#A0A0A0"
-            android:onClick="onBackClicked"
-            android:text="BACK"
-            android:textColor="@android:color/white" />
+            android:orientation="vertical">
 
-        <Button
-            android:id="@+id/btnAddGame"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_weight="1"
-            android:backgroundTint="#033E8C"
-            android:onClick="onAddGameToDBClicked"
-            android:text="Next"
-            android:textColor="@android:color/white" />
-    </LinearLayout>
+            <!-- Game Name -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilGameName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Game Name"
+                android:layout_marginTop="16dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edtGameName"
+                    android:layout_width="match_parent"
+                    android:layout_height="64dp"
+                    android:inputType="textCapWords"
+                    android:padding="12dp"
+                    android:text="Madibaz" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Opposition Name -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilOpposition"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Opposition Name"
+                android:layout_marginTop="12dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edtOpposition"
+                    android:layout_width="match_parent"
+                    android:layout_height="64dp"
+                    android:inputType="textCapWords"
+                    android:padding="12dp"
+                    android:text="UWC" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Game Date -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilGameDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Game Date"
+                android:layout_marginTop="12dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edtGameDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="64dp"
+                    android:focusable="false"
+                    android:clickable="true"
+                    android:inputType="none"
+                    android:onClick="onGameDateClicked"
+                    android:padding="12dp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Venue -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilVenue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Venue"
+                android:layout_marginTop="12dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edtVenue"
+                    android:layout_width="match_parent"
+                    android:layout_height="64dp"
+                    android:inputType="textCapWords"
+                    android:padding="12dp"
+                    android:text="Sports Centre" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Game Type -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilGameType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Game Type"
+                android:layout_marginTop="12dp"
+                app:boxBackgroundMode="outline"
+                app:endIconMode="dropdown_menu">
+
+                <AutoCompleteTextView
+                    android:id="@+id/actvGameType"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:inputType="none"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Button Row -->
+            <LinearLayout
+                android:id="@+id/buttonRow"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginTop="24dp">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnBack"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="0dp"
+                    android:layout_height="56dp"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="8dp"
+                    android:text="BACK"
+                    android:textColor="@android:color/white"
+                    android:backgroundTint="#A0A0A0"
+                    android:onClick="onBackClicked"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnAddGame"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="0dp"
+                    android:layout_height="56dp"
+                    android:layout_weight="1"
+                    android:layout_marginStart="8dp"
+                    android:text="NEXT"
+                    android:textColor="@android:color/white"
+                    android:backgroundTint="#033E8C"
+                    android:onClick="onAddGameToDBClicked"/>
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,11 +6,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.netballapp.Model.Player;
+import com.example.netballapp.Model.SessionManager;
+import com.example.netballapp.Model.UIUtils;
 import com.example.netballapp.R;
 import com.example.netballapp.api.RetrofitClient;
 import com.example.netballapp.api.SuperbaseAPI;
@@ -24,7 +27,7 @@ import retrofit2.Response;
 public class AddPlayer extends AppCompatActivity
 {
     private EditText edtFirstName, edtSurname, edtPlayerNumber, edtDOB, edtHeight;
-    private Spinner spinnerPosition;
+    private AutoCompleteTextView actvPosition;
     private SuperbaseAPI api;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,13 +39,12 @@ public class AddPlayer extends AppCompatActivity
         edtPlayerNumber = findViewById(R.id.edtPlayerNumber);
         edtDOB = findViewById(R.id.edtDOB);
         edtHeight = findViewById(R.id.edtHeight);
-        spinnerPosition=findViewById(R.id.spinnerPosition);
 
-        String[] positions = {"GS", "GA","WA","C","WD","GD","GK"};
+        actvPosition = findViewById(R.id.actvPosition);
+        String[] positions = {"GS", "GA", "WA", "C", "WD", "GD", "GK"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_spinner_item, positions);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerPosition.setAdapter(adapter);
+                R.layout.dropdown_item, positions);
+        actvPosition.setAdapter(adapter);
 
         api = RetrofitClient.getClient().create(SuperbaseAPI.class);
     }
@@ -57,39 +59,79 @@ public class AddPlayer extends AppCompatActivity
     public void onAddPlayerToDBClicked(View view) {
         String firstName = edtFirstName.getText().toString().trim();
         String surname = edtSurname.getText().toString().trim();
-        String strPlayerNumber=edtPlayerNumber.getText().toString().trim();
-        String dateOfBirth=edtDOB.getText().toString().trim();
+        String strPlayerNumber = edtPlayerNumber.getText().toString().trim();
+        String dateOfBirth = edtDOB.getText().toString().trim();
         String strHeight = edtHeight.getText().toString().trim();
-        String position = spinnerPosition.getSelectedItem().toString();
+        String position = actvPosition.getText().toString().trim();
 
+        // Validate first name and surname
+        if (firstName.isEmpty() || !firstName.matches("[a-zA-Z]+")) {
+            Toast.makeText(this, "Please enter a valid first name", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (surname.isEmpty() || !surname.matches("[a-zA-Z]+")) {
+            Toast.makeText(this, "Please enter a valid surname", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Validate player number
         Integer playerNumber = null;
         if (!strPlayerNumber.isEmpty()) {
             try {
                 playerNumber = Integer.parseInt(strPlayerNumber);
+                if (playerNumber <= 0) {
+                    Toast.makeText(this, "Player number must be greater than 0", Toast.LENGTH_SHORT).show();
+                    return;
+                }
             } catch (NumberFormatException e) {
-                Toast.makeText(this, "Please enter a valid player Number", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Please enter a valid player number", Toast.LENGTH_SHORT).show();
+                return;
             }
         } else {
-            Toast.makeText(this, "Player Number field is empty", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Player number field is empty", Toast.LENGTH_SHORT).show();
+            return;
         }
 
+        // Validate height
         Integer height = null;
         if (!strHeight.isEmpty()) {
             try {
                 height = Integer.parseInt(strHeight);
+                if (height < 50 || height > 250) { // arbitrary realistic height range
+                    Toast.makeText(this, "Please enter a valid height in cm", Toast.LENGTH_SHORT).show();
+                    return;
+                }
             } catch (NumberFormatException e) {
                 Toast.makeText(this, "Please enter a valid height", Toast.LENGTH_SHORT).show();
+                return;
             }
         } else {
             Toast.makeText(this, "Height field is empty", Toast.LENGTH_SHORT).show();
-        }
-
-        if (firstName.isEmpty() || surname.isEmpty() || dateOfBirth.isEmpty()) {
-            Toast.makeText(this, "Please fill all required fields", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        Player player= new Player(firstName,surname,playerNumber,position,dateOfBirth,height);
+        // Validate position
+        String[] validPositions = {"GS", "GA", "WA", "C", "WD", "GD", "GK"};
+        boolean isValidPosition = false;
+        for (String p : validPositions) {
+            if (p.equals(position)) {
+                isValidPosition = true;
+                break;
+            }
+        }
+        if (!isValidPosition) {
+            Toast.makeText(this, "Please select a valid position", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Validate date of birth
+        if (dateOfBirth.isEmpty()) {
+            Toast.makeText(this, "Date of Birth cannot be empty", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // All validations passed, create player object
+        Player player = new Player(firstName, surname, playerNumber, position, dateOfBirth, height);
 
         Call<List<Player>> call = api.registerPlayer(player);
         call.enqueue(new Callback<List<Player>>() {
@@ -97,18 +139,26 @@ public class AddPlayer extends AppCompatActivity
             public void onResponse(Call<List<Player>> call, Response<List<Player>> response) {
                 if (response.isSuccessful() && response.body() != null && !response.body().isEmpty()) {
                     Toast.makeText(AddPlayer.this, "Registration successful!", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(AddPlayer.this, Player_Profiles.class);
-                    startActivity(intent);
+                    startActivity(new Intent(AddPlayer.this, Player_Profiles.class));
                     finish();
                 } else {
                     Toast.makeText(AddPlayer.this, "Registration failed. Username might already exist.", Toast.LENGTH_SHORT).show();
-                    Toast.makeText(AddPlayer.this, response.toString(), Toast.LENGTH_SHORT).show();
                 }
             }
+
             @Override
             public void onFailure(Call<List<Player>> call, Throwable t) {
                 Toast.makeText(AddPlayer.this, "Error: " + t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+
+    public void onDOBClicked(View view) {
+        UIUtils.showDatePicker(this, edtDOB);
+    }
+
+    public void onLogoutClicked(View view) {
+            SessionManager.logout(this);
     }
 }

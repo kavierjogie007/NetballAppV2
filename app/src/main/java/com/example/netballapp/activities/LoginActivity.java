@@ -3,6 +3,8 @@ package com.example.netballapp.activities;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -38,16 +40,31 @@ public class LoginActivity extends AppCompatActivity {
         String username = edtUsername.getText().toString().trim();
         String password = edtPassword.getText().toString().trim();
 
-        // Calls loginCoach endpoint
+        if (username.isEmpty() || password.isEmpty()) {
+            Toast.makeText(this, "Please enter both username and password", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Check internet connectivity
+        if (!isNetworkAvailable()) {
+            Toast.makeText(this, "No internet connection", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         Call<List<Coach>> call = api.loginCoach("eq." + username, "eq." + password);
 
         call.enqueue(new Callback<List<Coach>>() {
             @Override
             public void onResponse(Call<List<Coach>> call, Response<List<Coach>> response) {
-                if (response.isSuccessful() && response.body() != null && !response.body().isEmpty()) {
-                    Coach coach = response.body().get(0);
+                if (!response.isSuccessful()) {
+                    Toast.makeText(LoginActivity.this, "Server error: " + response.code(), Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
-                    // Saves coach ID
+                List<Coach> coaches = response.body();
+                if (coaches != null && !coaches.isEmpty()) {
+                    Coach coach = coaches.get(0);
+
                     getSharedPreferences("MyAppPrefs", MODE_PRIVATE)
                             .edit()
                             .putLong("coach_ID", coach.getCoach_ID())
@@ -63,14 +80,22 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<List<Coach>> call, Throwable t) {
-                Toast.makeText(LoginActivity.this, "Login failed: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, "Network failure: " + t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
+
 
     public void onRegisterCoachClicked(View view) {
         Intent intent = new Intent(LoginActivity.this, RegisterCoachActivity.class);
         startActivity(intent);
         finish();
     }
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        return activeNetwork != null && activeNetwork.isConnected();
+    }
+
 }

@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:background="@android:color/white">
 
+    <!-- Top bar -->
     <LinearLayout
         android:id="@+id/topBar"
         android:layout_width="0dp"
@@ -42,39 +43,43 @@
             android:id="@+id/logoutButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:backgroundTint="#033E8C"
+            android:onClick="onLogoutClicked"
+            android:paddingHorizontal="12dp"
             android:text="Logout"
             android:textColor="@android:color/white"
-            android:textSize="14sp"
-            android:backgroundTint="#033E8C"
-            android:paddingHorizontal="12dp" />
+            android:textSize="14sp" />
     </LinearLayout>
 
+    <!-- Dashboard grid -->
     <GridLayout
         android:id="@+id/dashboardGrid"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:alignmentMode="alignMargins"
         android:columnCount="2"
         android:rowCount="2"
+        android:useDefaultMargins="true"
         android:padding="16dp"
         app:layout_constraintTop_toBottomOf="@id/topBar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintVertical_bias="0.2">
+        app:layout_constraintEnd_toEndOf="parent">
 
+        <!-- Player Profiles -->
         <LinearLayout
-            android:layout_width="160dp"
-            android:layout_height="160dp"
-            android:layout_margin="12dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
             android:background="@drawable/card_background"
             android:gravity="center"
             android:onClick="onPlayerProfilesClicked"
             android:orientation="vertical">
 
             <View
-                android:layout_width="48dp"
-                android:layout_height="48dp"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
                 android:background="@drawable/circle_icon" />
 
             <TextView
@@ -84,21 +89,23 @@
                 android:text="Player Profiles"
                 android:textAlignment="center"
                 android:textColor="#000000"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 android:textStyle="bold" />
         </LinearLayout>
 
+        <!-- Manage Games -->
         <LinearLayout
-            android:layout_width="160dp"
-            android:layout_height="160dp"
-            android:layout_margin="12dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
             android:background="@drawable/card_background"
             android:gravity="center"
             android:orientation="vertical">
 
             <View
-                android:layout_width="48dp"
-                android:layout_height="48dp"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
                 android:background="@drawable/circle_icon" />
 
             <TextView
@@ -108,22 +115,24 @@
                 android:text="Manage Games"
                 android:textAlignment="center"
                 android:textColor="#000000"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 android:textStyle="bold" />
         </LinearLayout>
 
+        <!-- Coach Profile -->
         <LinearLayout
-            android:layout_width="160dp"
-            android:layout_height="160dp"
-            android:layout_margin="12dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
             android:background="@drawable/card_background"
             android:gravity="center"
             android:onClick="onCoachProfileClicked"
             android:orientation="vertical">
 
             <View
-                android:layout_width="48dp"
-                android:layout_height="48dp"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
                 android:background="@drawable/circle_icon" />
 
             <TextView
@@ -133,22 +142,24 @@
                 android:text="Manage Coach Profile"
                 android:textAlignment="center"
                 android:textColor="#000000"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 android:textStyle="bold" />
         </LinearLayout>
 
+        <!-- Set Up New Game -->
         <LinearLayout
-            android:layout_width="160dp"
-            android:layout_height="160dp"
-            android:layout_margin="12dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
             android:background="@drawable/card_background"
             android:gravity="center"
             android:onClick="onSetUpNewGameClicked"
             android:orientation="vertical">
 
             <View
-                android:layout_width="48dp"
-                android:layout_height="48dp"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
                 android:background="@drawable/circle_icon" />
 
             <TextView
@@ -158,9 +169,10 @@
                 android:text="Set Up New Game"
                 android:textAlignment="center"
                 android:textColor="#000000"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 android:textStyle="bold" />
         </LinearLayout>
+
     </GridLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

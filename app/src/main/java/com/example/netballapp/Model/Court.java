@@ -12,6 +12,5 @@ public class Court
         this.player_id = player_ID;
         this.game_id = game_ID;
     }
-
 }
 
