@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:background="@android:color/darker_gray">
 
+    <!-- Top Bar -->
     <LinearLayout
         android:id="@+id/topBar"
         android:layout_width="0dp"
@@ -38,6 +39,7 @@
             android:textStyle="bold" />
     </LinearLayout>
 
+    <!-- Main Content -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/contentContainer"
         android:layout_width="0dp"
@@ -47,6 +49,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
+        <!-- Bench Area -->
         <ScrollView
             android:id="@+id/scrollBenchArea"
             android:layout_width="0dp"
@@ -61,12 +64,77 @@
             <LinearLayout
                 android:id="@+id/benchContainer"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:padding="12dp"
-                android:background="#e0f0ff" />
+                android:background="#e0f0ff">
+
+                <!-- Attack Section -->
+                <LinearLayout
+                    android:id="@+id/attackContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:padding="8dp"
+                    android:background="#ffe0e0"
+                    android:layout_marginBottom="12dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Attack"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textColor="@android:color/black"
+                        android:paddingBottom="8dp"/>
+                </LinearLayout>
+
+                <!-- Defence Section -->
+                <LinearLayout
+                    android:id="@+id/defenceContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:padding="8dp"
+                    android:background="#e0ffe0"
+                    android:layout_marginBottom="12dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Defence"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textColor="@android:color/black"
+                        android:paddingBottom="8dp"/>
+                </LinearLayout>
+
+                <!-- Centre Section -->
+                <LinearLayout
+                    android:id="@+id/centreContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:padding="8dp"
+                    android:background="#e0e0ff">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Centre"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textColor="@android:color/black"
+                        android:paddingBottom="8dp"/>
+                </LinearLayout>
+            </LinearLayout>
+
         </ScrollView>
 
+        <!-- Player List -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/lstPlayers"
             android:layout_width="0dp"
@@ -78,6 +146,7 @@
             app:layout_constraintEnd_toEndOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <!-- Button Group -->
     <LinearLayout
         android:id="@+id/buttonGroup"
         android:layout_width="0dp"
@@ -106,7 +175,7 @@
             android:layout_marginStart="16dp"
             android:layout_weight="1"
             android:backgroundTint="#003da5"
-            android:onClick="onSaveClicked"
+            android:onClick="onStartGameClicked"
             android:text="START GAME"
             android:textColor="@android:color/white" />
     </LinearLayout>

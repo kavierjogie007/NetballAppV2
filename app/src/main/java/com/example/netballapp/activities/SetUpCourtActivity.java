@@ -31,7 +31,6 @@ import retrofit2.Response;
 
 public class SetUpCourtActivity extends AppCompatActivity
 {
-    private List<Player> playerList;
     private PlayerAdapterCourt adapter;
     private RecyclerView lstPlayers;
     private SuperbaseAPI api;
@@ -69,70 +68,52 @@ public class SetUpCourtActivity extends AppCompatActivity
         api = RetrofitClient.getClient().create(SuperbaseAPI.class);
 
         // Set position click listeners
-        posGA.setOnClickListener(v -> assignPlayerToPosition("court_goalAttack"));
-        posGS.setOnClickListener(v -> assignPlayerToPosition("court_goalScore"));
-        posC.setOnClickListener(v -> assignPlayerToPosition("court_centre"));
-        posWA.setOnClickListener(v -> assignPlayerToPosition("court_WingAttack"));
-        posWD.setOnClickListener(v -> assignPlayerToPosition("court_WingDefence"));
-        posGD.setOnClickListener(v -> assignPlayerToPosition("court_Defence"));
-        posGK.setOnClickListener(v -> assignPlayerToPosition("court_GoalKeeper"));
+        posGA.setOnClickListener(v -> assignPlayerToPosition("GA"));
+        posGS.setOnClickListener(v -> assignPlayerToPosition("GS"));
+        posC.setOnClickListener(v -> assignPlayerToPosition("C"));
+        posWA.setOnClickListener(v -> assignPlayerToPosition("WA"));
+        posWD.setOnClickListener(v -> assignPlayerToPosition("WD"));
+        posGD.setOnClickListener(v -> assignPlayerToPosition("GD"));
+        posGK.setOnClickListener(v -> assignPlayerToPosition("GK"));
+
 
         // Fetch players
         loadPlayersFromSupabase();
     }
 
-    private void assignPlayerToPosition(String positionField) {
-        if (selectedPlayer == null)
-        {
+    private void assignPlayerToPosition(String position) {
+        if (selectedPlayer == null) {
             Toast.makeText(this, "Please select a player first.", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        Court assignment = new Court(positionField, currentGameId,selectedPlayer.getPlayer_ID());
+        Court assignment = new Court(position, currentGameId, selectedPlayer.getPlayer_ID());
 
         Call<List<Court>> call = api.assignPlayerToCourt(assignment);
-        call.enqueue(new Callback<List<Court>>()
-        {
+        call.enqueue(new Callback<List<Court>>() {
             @Override
             public void onResponse(Call<List<Court>> call, Response<List<Court>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     String playerName = selectedPlayer.getPlayer_FirstName() + " " + selectedPlayer.getPlayer_Surname();
 
-                    switch (positionField) {
-                        case "court_goalAttack":
-                            posGA.setText(playerName);
-                            break;
-                        case "court_goalScore":
-                            posGS.setText(playerName);
-                            break;
-                        case "court_centre":
-                            posC.setText(playerName);
-                            break;
-                        case "court_WingAttack":
-                            posWA.setText(playerName);
-                            break;
-                        case "court_WingDefence":
-                            posWD.setText(playerName);
-                            break;
-                        case "court_Defence":
-                            posGD.setText(playerName);
-                            break;
-                        case "court_GoalKeeper":
-                            posGK.setText(playerName);
-                            break;
+                    switch (position) {
+                        case "GA": posGA.setText(playerName); break;
+                        case "GS": posGS.setText(playerName); break;
+                        case "C":  posC.setText(playerName); break;
+                        case "WA": posWA.setText(playerName); break;
+                        case "WD": posWD.setText(playerName); break;
+                        case "GD": posGD.setText(playerName); break;
+                        case "GK": posGK.setText(playerName); break;
                     }
 
-                    Toast.makeText(SetUpCourtActivity.this, "Player assigned to " + positionField, Toast.LENGTH_SHORT).show();
-
-                    // Remove player from list
+                    Toast.makeText(SetUpCourtActivity.this, "Player assigned to " + position, Toast.LENGTH_SHORT).show();
                     adapter.removePlayer(selectedPlayer);
                     selectedPlayer = null;
-
                 } else {
                     Toast.makeText(SetUpCourtActivity.this, "Assignment failed: " + response.code(), Toast.LENGTH_SHORT).show();
-                    Toast.makeText(SetUpCourtActivity.this, ""+selectedPlayer.getPlayer_ID(), Toast.LENGTH_SHORT).show();
                 }
             }
+
             @Override
             public void onFailure(Call<List<Court>> call, Throwable t) {
                 Toast.makeText(SetUpCourtActivity.this, "API error: " + t.getMessage(), Toast.LENGTH_LONG).show();
@@ -167,6 +148,16 @@ public class SetUpCourtActivity extends AppCompatActivity
         });
     }
 
+    private boolean isTeamComplete() {
+        return !posGA.getText().toString().equals("GA") &&
+                !posGS.getText().toString().equals("GS") &&
+                !posC.getText().toString().equals("C") &&
+                !posWA.getText().toString().equals("WA") &&
+                !posWD.getText().toString().equals("WD") &&
+                !posGD.getText().toString().equals("GD") &&
+                !posGK.getText().toString().equals("GK");
+    }
+
     public void onBackClicked(View view) {
         Intent intent = new Intent(SetUpCourtActivity.this, SetUpNewGameActivity.class);
         startActivity(intent);
@@ -174,8 +165,15 @@ public class SetUpCourtActivity extends AppCompatActivity
     }
 
     public void onNextClicked(View view) {
+    /*    if (!isTeamComplete()) {
+            Toast.makeText(this, "Please assign all 7 positions before continuing.", Toast.LENGTH_SHORT).show();
+            return;
+        }*/
+
         Intent intent = new Intent(SetUpCourtActivity.this, SetBenchPlayersActivity.class);
+        intent.putExtra("players_list", new ArrayList<>(adapter.getPlayers()));
         startActivity(intent);
         finish();
     }
+
 }

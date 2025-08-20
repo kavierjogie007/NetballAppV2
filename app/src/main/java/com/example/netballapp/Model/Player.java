@@ -2,7 +2,9 @@ package com.example.netballapp.Model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Player {
+import java.io.Serializable;
+
+public class Player implements Serializable {
     @SerializedName("player_ID")
     private Long player_ID;
 
@@ -35,6 +37,19 @@ public class Player {
         this.player_FirstName = player_FirstName;
         this.player_Surname = player_Surname;
     }
+
+    // For placeholder rows like "Select a player" or "No players available"
+    public Player(long player_ID, String player_FirstName, String player_Surname, String player_position) {
+        this.player_ID = player_ID;
+        this.player_FirstName = player_FirstName;
+        this.player_Surname = player_Surname;
+        this.player_position = player_position;
+    }
+    public Player(Long player_ID) {
+        this.player_ID = player_ID;
+    }
+
+
     public String getPlayer_FirstName() {
         return player_FirstName;
     }

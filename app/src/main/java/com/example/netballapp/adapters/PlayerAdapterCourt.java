@@ -8,18 +8,20 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.netballapp.Model.Player;
 import com.example.netballapp.R;
 import com.example.netballapp.listeners.OnPlayerClickListener;
+import androidx.cardview.widget.CardView;
 
 import java.util.List;
 
 public class PlayerAdapterCourt extends RecyclerView.Adapter<PlayerAdapterCourt.PlayerViewHolder>
 {
-    public final List<Player> playerList;
+    public List<Player> playerList;
     private final Context context;
     private OnPlayerClickListener listener;
     private int selectedPosition = RecyclerView.NO_POSITION;
@@ -38,17 +40,18 @@ public class PlayerAdapterCourt extends RecyclerView.Adapter<PlayerAdapterCourt.
     }
 
     @Override
-    public void onBindViewHolder(@NonNull PlayerAdapterCourt.PlayerViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull PlayerViewHolder holder, int position) {
         Player player = playerList.get(position);
 
-        holder.lblName.setText(player.getPlayer_FirstName());
-        holder.lblSurname.setText(player.getPlayer_Surname());
+        String fullName = player.getPlayer_FirstName() + " " + player.getPlayer_Surname();
+        holder.lblFullName.setText(fullName);
+        holder.lblPosition.setText(player.getPlayer_position());
 
         // Highlight selected item
         if (selectedPosition == position) {
-            holder.itemView.setBackgroundColor(ContextCompat.getColor(context, R.color.highlight));
+            holder.cardView.setCardBackgroundColor(ContextCompat.getColor(context, R.color.highlight_blue));
         } else {
-            holder.itemView.setBackgroundColor(Color.TRANSPARENT);
+            holder.cardView.setCardBackgroundColor(Color.WHITE);
         }
 
         holder.itemView.setOnClickListener(v -> {
@@ -60,20 +63,23 @@ public class PlayerAdapterCourt extends RecyclerView.Adapter<PlayerAdapterCourt.
         });
     }
 
+
+
     @Override
     public int getItemCount() {
         return playerList.size();
     }
 
-    public static class PlayerViewHolder extends RecyclerView.ViewHolder
-    {
-        public TextView lblName;
-        public TextView lblSurname;
+    public static class PlayerViewHolder extends RecyclerView.ViewHolder {
+        public CardView cardView;
+        public TextView lblFullName;
+        public TextView lblPosition;
 
         public PlayerViewHolder(@NonNull View itemView) {
             super(itemView);
-            lblName= itemView.findViewById(R.id.txtFirstName);
-            lblSurname=itemView.findViewById(R.id.txtSurname);
+            cardView = (CardView) itemView; // cast here once
+            lblFullName = itemView.findViewById(R.id.txtFullName);
+            lblPosition = itemView.findViewById(R.id.txtPosition);
         }
     }
 
@@ -90,4 +96,8 @@ public class PlayerAdapterCourt extends RecyclerView.Adapter<PlayerAdapterCourt.
             }
         }
     }
+    public List<Player> getPlayers() {
+        return playerList;
+    }
+
 }

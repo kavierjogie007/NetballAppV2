@@ -89,10 +89,11 @@ public interface SuperbaseAPI {
     Call<List<Court>> assignPlayerToCourt(
             @Body Court assignment);
 
-    //functions
-    @POST("rest/v1/rpc/get_available_players")
-    @Headers({"Content-Type: application/json"})
-    Call<List<Player>> getAvailablePlayers(
-            @Body Map<String, Object> params);
+    // Fetch all court assignments
+    @GET("rest/v1/court")
+    Call<List<Court>> getCourtAssignments(
+            @Query("select") String select // e.g., "*,player(*)" to include related player data
+    );
+
 }
 
