@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="12dp"
+    android:background="@drawable/card_background">
+
+    <!-- Player Name -->
+    <TextView
+        android:id="@+id/tvPlayerName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Player Name"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:paddingBottom="4dp"/>
+
+    <!-- Scoring Section -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Scoring"
+        android:textStyle="bold"
+        android:textColor="#FF5722"
+        android:layout_marginTop="4dp"/>
+
+    <TextView android:id="@+id/tvGoal" android:layout_width="match_parent" android:layout_height="wrap_content"/>
+    <TextView android:id="@+id/tvPenaltyGoal" android:layout_width="match_parent" android:layout_height="wrap_content"/>
+    <TextView android:id="@+id/tvGoalMissed" android:layout_width="match_parent" android:layout_height="wrap_content"/>
+    <TextView android:id="@+id/tvSuccessRate" android:layout_width="match_parent" android:layout_height="wrap_content"/>
+
+    <!-- Positive Play Section -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Positive Play"
+        android:textStyle="bold"
+        android:textColor="#4CAF50"
+        android:layout_marginTop="4dp"/>
+
+    <TextView android:id="@+id/tvFor" android:layout_width="match_parent" android:layout_height="wrap_content"/>
+    <TextView android:id="@+id/tvAgainst" android:layout_width="match_parent" android:layout_height="wrap_content"/>
+    <TextView android:id="@+id/tvOffensiveRebound" android:layout_width="match_parent" android:layout_height="wrap_content"/>
+    <TextView android:id="@+id/tvDefensiveRebound" android:layout_width="match_parent" android:layout_height="wrap_content"/>
+    <TextView android:id="@+id/tvCentrePassReceive" android:layout_width="match_parent" android:layout_height="wrap_content"/>
+    <TextView android:id="@+id/tvGoalAssist" android:layout_width="match_parent" android:layout_height="wrap_content"/>
+    <TextView android:id="@+id/tvDeflection" android:layout_width="match_parent" android:layout_height="wrap_content"/>
+    <TextView android:id="@+id/tvIntercept" android:layout_width="match_parent" android:layout_height="wrap_content"/>
+
+    <!-- Penalties & Errors Section -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Penalties and Errors"
+        android:textStyle="bold"
+        android:textColor="#F44336"
+        android:layout_marginTop="4dp"/>
+
+    <TextView android:id="@+id/tvDropBall" android:layout_width="match_parent" android:layout_height="wrap_content"/>
+    <TextView android:id="@+id/tvHeldBall" android:layout_width="match_parent" android:layout_height="wrap_content"/>
+    <TextView android:id="@+id/tvStepping" android:layout_width="match_parent" android:layout_height="wrap_content"/>
+    <TextView android:id="@+id/tvBreak" android:layout_width="match_parent" android:layout_height="wrap_content"/>
+    <TextView android:id="@+id/tvContact" android:layout_width="match_parent" android:layout_height="wrap_content"/>
+    <TextView android:id="@+id/tvObstruction" android:layout_width="match_parent" android:layout_height="wrap_content"/>
+
+</LinearLayout>

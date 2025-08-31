@@ -4,6 +4,9 @@ import com.example.netballapp.Model.Coach;
 import com.example.netballapp.Model.Court;
 import com.example.netballapp.Model.Game;
 import com.example.netballapp.Model.Player;
+import com.example.netballapp.Model.PlayerAction;
+import com.example.netballapp.Model.PlayerCoach;
+import com.example.netballapp.Model.PlayerStatsView;
 
 import java.util.List;
 import java.util.Map;
@@ -58,8 +61,7 @@ public interface SuperbaseAPI {
 
     // GET player by ID
     @GET("rest/v1/player")
-    Call<List<Player>> getPlayerById(
-            @Query("player_ID") String idFilter);
+    Call<List<Player>> getPlayerById(@Query("player_ID") String idFilter);
 
     @POST("rest/v1/player")
     @Headers({"Prefer: return=representation"})
@@ -89,11 +91,36 @@ public interface SuperbaseAPI {
     Call<List<Court>> assignPlayerToCourt(
             @Body Court assignment);
 
-    // Fetch all court assignments
+    // Fetch players assigned to a specific game
+    // Court table - raw assignments
     @GET("rest/v1/court")
     Call<List<Court>> getCourtAssignments(
-            @Query("select") String select // e.g., "*,player(*)" to include related player data
+            @Query("game_id") String gameId // must pass "eq.123"
     );
 
+    @POST("rest/v1/player_action")
+    Call<Void> recordPlayerAction(@Body PlayerAction action);
+
+    @DELETE("rest/v1/player_action")
+    Call<Void> deletePlayerAction(@Query("id") Long actionId);
+
+    // Game by ID
+    @GET("rest/v1/game")
+    Call<List<Game>> getGameById(@Query("game_ID") String gameIdFilter);
+
+    // Players by Game
+    @GET("rest/v1/player")
+    Call<List<Player>> getPlayersByGame(@Query("game_ID") String gameIdFilter);
+
+    // Player Actions by Game
+    @GET("rest/v1/player_action")
+    Call<List<PlayerAction>> getPlayerActionsByGame(@Query("game_ID") String gameIdFilter);
+
+    @POST("rest/v1/player_coach")
+    Call<PlayerCoach> assignPlayerToCoach(@Body PlayerCoach playerCoach);
+
+    // SuperbaseAPI.java
+    @GET("rest/v1/player_stats")
+    Call<List<PlayerStatsView>> getPlayerStatsByGame(@Query("game_ID") String gameIdFilter);
 }
 

@@ -161,7 +161,7 @@ public class SetBenchPlayersActivity extends AppCompatActivity {
     }
 
     public void onStartGameClicked(View view) {
-        Intent intent = new Intent(SetBenchPlayersActivity.this, SetBenchPlayersActivity.class);
+        Intent intent = new Intent(SetBenchPlayersActivity.this, GameScreenActivity.class);
         startActivity(intent);
         finish();
     }

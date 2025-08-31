@@ -39,6 +39,18 @@ public class Game {
     @SerializedName("game_coach_note")
     private String game_CoachNote;
 
+    public String getGame_Venue() {
+        return game_Venue;
+    }
+
+    public Integer getGame_MadibazScore() {
+        return game_MadibazScore;
+    }
+
+    public Integer getGame_OppositionScore() {
+        return game_OppositionScore;
+    }
+
     public Game(String game_Name, String game_OppositionName, String game_Venue, String game_Date, String game_Type, Integer game_BenchPositions, Integer game_MadibazScore, Integer game_OppositionScore, Integer game_Timer, String game_CurrentCentrePassTeam, String game_CoachNote) {
         this.game_Name = game_Name;
         this.game_OppositionName = game_OppositionName;
@@ -51,6 +63,17 @@ public class Game {
         this.game_Timer = game_Timer;
         this.game_CurrentCentrePassTeam = game_CurrentCentrePassTeam;
         this.game_CoachNote = game_CoachNote;
+    }
+
+    public Game() {
+    }
+
+    public String getGame_Date() {
+        return game_Date;
+    }
+
+    public String getGame_Name() {
+        return game_Name;
     }
 
     public Long getGame_ID() {

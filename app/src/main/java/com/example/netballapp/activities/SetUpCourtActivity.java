@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.example.netballapp.Model.Court;
 import com.example.netballapp.Model.Player;
+import com.example.netballapp.Model.PlayerCoach;
 import com.example.netballapp.R;
 import com.example.netballapp.adapters.PlayerAdapter;
 import com.example.netballapp.adapters.PlayerAdapterCourt;
@@ -79,6 +80,7 @@ public class SetUpCourtActivity extends AppCompatActivity
 
         // Fetch players
         loadPlayersFromSupabase();
+        loadPlayers(currentGameId);
     }
 
     private void assignPlayerToPosition(String position) {
@@ -87,15 +89,38 @@ public class SetUpCourtActivity extends AppCompatActivity
             return;
         }
 
+        // Assign player to court
         Court assignment = new Court(position, currentGameId, selectedPlayer.getPlayer_ID());
 
-        Call<List<Court>> call = api.assignPlayerToCourt(assignment);
-        call.enqueue(new Callback<List<Court>>() {
+        api.assignPlayerToCourt(assignment).enqueue(new Callback<List<Court>>() {
             @Override
             public void onResponse(Call<List<Court>> call, Response<List<Court>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    String playerName = selectedPlayer.getPlayer_FirstName() + " " + selectedPlayer.getPlayer_Surname();
 
+                    // Assign player to coach
+                    long coachId = getSharedPreferences("MyAppPrefs", MODE_PRIVATE)
+                            .getLong("coach_ID", -1);
+
+// Toast to check coachId
+                    Toast.makeText(SetUpCourtActivity.this, "Coach ID: " + coachId, Toast.LENGTH_SHORT).show();
+                    if (coachId != -1) {
+                        PlayerCoach pc = new PlayerCoach(coachId, selectedPlayer.getPlayer_ID());
+                        api.assignPlayerToCoach(pc).enqueue(new Callback<PlayerCoach>() {
+                            @Override
+                            public void onResponse(Call<PlayerCoach> call, Response<PlayerCoach> response) {
+                                if (!response.isSuccessful()) {
+                                    Log.e("SetUpCourt", "Player-Coach assignment failed: " + response.code());
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<PlayerCoach> call, Throwable t) {
+                                Log.e("SetUpCourt", "Player-Coach assignment error: " + t.getMessage());
+                            }
+                        });
+                    }
+
+                    String playerName = selectedPlayer.getPlayer_FirstName() + " " + selectedPlayer.getPlayer_Surname();
                     switch (position) {
                         case "GA": posGA.setText(playerName); break;
                         case "GS": posGS.setText(playerName); break;
@@ -109,6 +134,7 @@ public class SetUpCourtActivity extends AppCompatActivity
                     Toast.makeText(SetUpCourtActivity.this, "Player assigned to " + position, Toast.LENGTH_SHORT).show();
                     adapter.removePlayer(selectedPlayer);
                     selectedPlayer = null;
+
                 } else {
                     Toast.makeText(SetUpCourtActivity.this, "Assignment failed: " + response.code(), Toast.LENGTH_SHORT).show();
                 }
@@ -157,6 +183,68 @@ public class SetUpCourtActivity extends AppCompatActivity
                 !posGD.getText().toString().equals("GD") &&
                 !posGK.getText().toString().equals("GK");
     }
+
+    private void loadPlayers(Long gameId) {
+        Call<List<Court>> call = api.getCourtAssignments("eq." + gameId);
+
+        call.enqueue(new Callback<List<Court>>() {
+            @Override
+            public void onResponse(Call<List<Court>> call, Response<List<Court>> response) {
+                if (!response.isSuccessful()) {
+                    Toast.makeText(SetUpCourtActivity.this, "Server error: " + response.code(), Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                List<Court> courtAssignments = response.body();
+                if (courtAssignments != null) {
+                    for (Court court : courtAssignments) {
+                        Long playerId = court.getPlayer_id();
+                        String pos = court.getCourt_position_field();
+
+                        // Now fetch player details by ID
+                        loadPlayerDetails(playerId, pos);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Court>> call, Throwable t) {
+                Toast.makeText(SetUpCourtActivity.this, "Network error: " + t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void loadPlayerDetails(Long playerId, String pos) {
+        Call<List<Player>> call = api.getPlayerById("eq." + playerId);
+        call.enqueue(new Callback<List<Player>>() {
+            @Override
+            public void onResponse(Call<List<Player>> call, Response<List<Player>> response) {
+                if (!response.isSuccessful()) {
+                    Toast.makeText(SetUpCourtActivity.this, "Error loading player: " + response.code(), Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                List<Player> players = response.body();
+                if (players != null && !players.isEmpty()) {
+                    Player player = players.get(0);
+                    String playerName = player.getPlayer_FirstName() + " " + player.getPlayer_Surname();
+
+                    // Match "posGS", "posGA", etc. in layout
+                    int resId = getResources().getIdentifier("pos" + pos, "id", getPackageName());
+                    TextView posText = findViewById(resId);
+                    if (posText != null) {
+                        posText.setText(playerName);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Player>> call, Throwable t) {
+                Toast.makeText(SetUpCourtActivity.this, "Network error: " + t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
 
     public void onBackClicked(View view) {
         Intent intent = new Intent(SetUpCourtActivity.this, SetUpNewGameActivity.class);
