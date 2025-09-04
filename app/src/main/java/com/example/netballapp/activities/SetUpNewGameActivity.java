@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.netballapp.Model.CoachGame;
 import com.example.netballapp.Model.Game;
 import com.example.netballapp.Model.UIUtils;
 import com.example.netballapp.R;
@@ -74,20 +75,44 @@ public class SetUpNewGameActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<Game>> call, Response<List<Game>> response) {
                 if (response.isSuccessful()) {
-                    Game savedGame=response.body().get(0);
+                    Game savedGame = response.body().get(0);
                     Toast.makeText(SetUpNewGameActivity.this, "Set Up New Game successful!", Toast.LENGTH_SHORT).show();
 
-                    // Saves coach ID
+                    // Save game info
                     getSharedPreferences("MyAppPrefs", MODE_PRIVATE)
                             .edit()
                             .putLong("game_ID", savedGame.getGame_ID())
-                            .putInt("game_BenchPlayers",savedGame.getGame_BenchPositions())
+                            .putInt("game_BenchPlayers", savedGame.getGame_BenchPositions())
                             .apply();
 
+                    // ✅ Now link coach to game
+                    long coachId = getSharedPreferences("MyAppPrefs", MODE_PRIVATE)
+                            .getLong("coach_ID", -1);
+
+                    CoachGame coachGame = new CoachGame(coachId, savedGame.getGame_ID());
+
+                    api.assignCoachToGame(coachGame).enqueue(new Callback<CoachGame>() {
+                        @Override
+                        public void onResponse(Call<CoachGame> call, Response<CoachGame> response) {
+                            if (response.isSuccessful()) {
+                                Log.d("COACH_GAME", "Coach linked to game successfully!");
+                            } else {
+                                Log.e("COACH_GAME", "Failed to link coach: " + response.toString());
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<CoachGame> call, Throwable t) {
+                            Log.e("COACH_GAME", "Error: " + t.getMessage());
+                        }
+                    });
+
+                    // Move on to SetUpCourtActivity
                     Intent intent = new Intent(SetUpNewGameActivity.this, SetUpCourtActivity.class);
                     startActivity(intent);
-                   finish();
+                    finish();
                 }
+
                 else
                 {
                     Toast.makeText(SetUpNewGameActivity.this, "Set Up Game failed.", Toast.LENGTH_SHORT).show();

@@ -119,6 +119,127 @@
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
+            <!-- KPI Section -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/kpiCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="6dp"
+                app:cardBackgroundColor="#F7F7F7">
+
+                <LinearLayout
+                    android:id="@+id/kpiContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="12dp"
+                    android:gravity="center"
+                    android:weightSum="4">
+
+                    <!-- Goals -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:gravity="center">
+
+                        <TextView
+                            android:id="@+id/tvKpiGoals"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            android:textColor="#011933"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Goals"
+                            android:textSize="14sp"
+                            android:textColor="#555555"/>
+                    </LinearLayout>
+
+                    <!-- Assists -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:gravity="center">
+
+                        <TextView
+                            android:id="@+id/tvKpiAssists"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            android:textColor="#011933"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Assists"
+                            android:textSize="14sp"
+                            android:textColor="#555555"/>
+                    </LinearLayout>
+
+                    <!-- Intercepts -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:gravity="center">
+
+                        <TextView
+                            android:id="@+id/tvKpiIntercepts"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            android:textColor="#011933"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Intercepts"
+                            android:textSize="14sp"
+                            android:textColor="#555555"/>
+                    </LinearLayout>
+
+                    <!-- Deflections -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:gravity="center">
+
+                        <TextView
+                            android:id="@+id/tvKpiDeflections"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            android:textColor="#011933"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Deflections"
+                            android:textSize="14sp"
+                            android:textColor="#555555"/>
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
 
             <!-- Toggle -->
             <RadioGroup
@@ -165,7 +286,6 @@
                     android:clipToPadding="false"
                     android:scrollbars="vertical"/>
             </com.google.android.material.card.MaterialCardView>
-
 
             <!-- Chart Buttons Card -->
             <com.google.android.material.card.MaterialCardView

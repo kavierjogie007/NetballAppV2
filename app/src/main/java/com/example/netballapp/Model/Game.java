@@ -68,6 +68,10 @@ public class Game {
     public Game() {
     }
 
+    public String getGame_OppositionName() {
+        return game_OppositionName;
+    }
+
     public String getGame_Date() {
         return game_Date;
     }

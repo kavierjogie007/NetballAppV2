@@ -1,71 +1,90 @@
 package com.example.netballapp.adapters;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.netballapp.Model.Player;
-import com.example.netballapp.listeners.OnPlayerActionListener;
 import com.example.netballapp.R;
 import com.example.netballapp.activities.UpdatePlayerProfile;
+import com.example.netballapp.listeners.OnPlayerActionListener;
 
 import java.util.List;
 
-public class PlayerAdapter extends BaseAdapter {
-    private Context context;
-    private List<Player> playerList;
-    private OnPlayerActionListener listener;
+public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.PlayerViewHolder> {
+
+    private final Context context;
+    private final List<Player> playerList;
+    private final OnPlayerActionListener listener;
 
     public PlayerAdapter(Context context, List<Player> playerList, OnPlayerActionListener listener) {
         this.context = context;
         this.playerList = playerList;
         this.listener = listener;
     }
+
+    @NonNull
     @Override
-    public int getCount() {
-        return playerList.size();
+    public PlayerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(context).inflate(R.layout.player_row, parent, false);
+        return new PlayerViewHolder(view);
     }
 
     @Override
-    public Object getItem(int position) {
-        return playerList.get(position);
-    }
+    public void onBindViewHolder(@NonNull PlayerViewHolder holder, int position) {
+        Player player = playerList.get(position);
 
-    @Override
-    public long getItemId(int position) {
-        return playerList.get(position).getPlayer_ID();
-    }
+        holder.txtFirstName.setText(player.getPlayer_FirstName());
+        holder.txtSurname.setText(player.getPlayer_Surname());
 
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        @SuppressLint("ViewHolder") View view = View.inflate(context, R.layout.player_row, null);
-
-        TextView txtFirst = view.findViewById(R.id.txtFirstName);
-        TextView txtSurname = view.findViewById(R.id.txtSurname);
-        Button btnUpdate = view.findViewById(R.id.btnUpdate);
-        Button btnDelete = view.findViewById(R.id.btnDelete);
-
-        Player p = playerList.get(position);
-        txtFirst.setText(p.getPlayer_FirstName());
-        txtSurname.setText(p.getPlayer_Surname());
-
-        btnUpdate.setOnClickListener(v -> {
+        // Update button click
+        holder.btnUpdate.setOnClickListener(v -> {
             Intent intent = new Intent(context, UpdatePlayerProfile.class);
-            intent.putExtra("player_id", p.getPlayer_ID()); // pass player ID
+            intent.putExtra("player_id", player.getPlayer_ID());
             context.startActivity(intent);
         });
 
-        //Adapter calls
-        btnDelete.setOnClickListener(v -> {
-            listener.onDeletePlayer(playerList.get(position), position);
+        // Delete button click
+        holder.btnDelete.setOnClickListener(v -> {
+            listener.onDeletePlayer(player, position);
+            removePlayer(position);
         });
+    }
 
-        return view;
+    @Override
+    public int getItemCount() {
+        return playerList.size();
+    }
+
+    public static class PlayerViewHolder extends RecyclerView.ViewHolder {
+        TextView txtFirstName, txtSurname;
+        Button btnUpdate, btnDelete;
+
+        public PlayerViewHolder(@NonNull View itemView) {
+            super(itemView);
+            txtFirstName = itemView.findViewById(R.id.txtFirstName);
+            txtSurname = itemView.findViewById(R.id.txtSurname);
+            btnUpdate = itemView.findViewById(R.id.btnUpdate);
+            btnDelete = itemView.findViewById(R.id.btnDelete);
+        }
+    }
+
+    // Method to remove player from list
+    public void removePlayer(int position) {
+        if (position >= 0 && position < playerList.size()) {
+            playerList.remove(position);
+            notifyItemRemoved(position);
+        }
+    }
+
+    public List<Player> getPlayers() {
+        return playerList;
     }
 }
-

@@ -80,8 +80,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="64dp"
                     android:inputType="textCapWords"
-                    android:padding="12dp"
-                    android:text="Madibaz" />
+                    android:padding="12dp" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Opposition Name -->
@@ -97,8 +96,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="64dp"
                     android:inputType="textCapWords"
-                    android:padding="12dp"
-                    android:text="UWC" />
+                    android:padding="12dp" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Game Date -->
@@ -134,8 +132,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="64dp"
                     android:inputType="textCapWords"
-                    android:padding="12dp"
-                    android:text="Sports Centre" />
+                    android:padding="12dp" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Game Type -->

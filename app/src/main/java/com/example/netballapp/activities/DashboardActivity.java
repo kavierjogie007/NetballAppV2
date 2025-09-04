@@ -39,4 +39,9 @@ public class DashboardActivity extends AppCompatActivity {
         SessionManager.logout(this);
     }
 
+    public void onManageGamesClicked(View view) {
+        Intent intent = new Intent(DashboardActivity.this, ManageGamesActivity.class);
+        startActivity(intent);
+        finish();
+    }
 }

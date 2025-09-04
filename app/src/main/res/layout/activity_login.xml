@@ -74,7 +74,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Username"
-                    android:text="Kavier"/>
+                    android:text="Kavier" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Password Input -->
@@ -89,7 +89,7 @@
                     android:layout_height="wrap_content"
                     android:hint="Password"
                     android:inputType="textPassword"
-                    android:text="1234"/>
+                    android:text="1234" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Login Button -->

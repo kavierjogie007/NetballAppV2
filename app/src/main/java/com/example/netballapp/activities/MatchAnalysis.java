@@ -35,6 +35,7 @@ import com.github.mikephil.charting.data.RadarData;
 import com.github.mikephil.charting.data.RadarDataSet;
 import com.github.mikephil.charting.data.RadarEntry;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
+import com.github.mikephil.charting.interfaces.datasets.IRadarDataSet;
 import com.google.android.material.card.MaterialCardView;
 
 import java.util.ArrayList;
@@ -62,6 +63,7 @@ public class MatchAnalysis extends AppCompatActivity {
     private PieChart teamShootingChart;
     private MaterialCardView chartButtonsCard;
 
+    private TextView tvKpiGoals, tvKpiAssists, tvKpiIntercepts, tvKpiDeflections;
     private MaterialCardView rvPlayerActionsCard;
 
     @Override
@@ -84,6 +86,11 @@ public class MatchAnalysis extends AppCompatActivity {
         teamShootingChart=findViewById(R.id.teamShootingChart);
         chartButtonsCard = findViewById(R.id.chartButtonsCard);
         rvPlayerActionsCard = findViewById(R.id.rvPlayerActionsCard);
+        tvKpiGoals = findViewById(R.id.tvKpiGoals);
+        tvKpiAssists = findViewById(R.id.tvKpiAssists);
+        tvKpiIntercepts = findViewById(R.id.tvKpiIntercepts);
+        tvKpiDeflections = findViewById(R.id.tvKpiDeflections);
+
 
         rvPlayerActions.setLayoutManager(new LinearLayoutManager(this));
 
@@ -173,13 +180,16 @@ public class MatchAnalysis extends AppCompatActivity {
                     List<PlayerStatsView> statsList = response.body();
                     rvPlayerActions.setAdapter(new PlayerStatsAdapter(statsList));
 
+                    updateKpis(statsList);
                     PlayerStatsView totals = calculateTeamTotals(statsList);
                     displayTeamShootingChart(totals);
 
                     displayPlayerStatsChart(statsList);
                     displayShootingAccuracyChart(statsList);
                     displayErrorsChart(statsList);
-                    if (!statsList.isEmpty()) displayContributionsChart(statsList.get(0));
+                    if (!statsList.isEmpty())
+                        displayContributionsChart(statsList);
+
 
                     // ADD THIS LINE
                     calculateAndDisplayTeamStats(statsList);
@@ -393,25 +403,50 @@ public class MatchAnalysis extends AppCompatActivity {
         errorsChart.invalidate();
     }
 
-    private void displayContributionsChart(PlayerStatsView stats) {
-        List<RadarEntry> entries = new ArrayList<>();
-        entries.add(new RadarEntry(stats.getIntercept()));
-        entries.add(new RadarEntry(stats.getDeflection()));
-        entries.add(new RadarEntry(stats.getGoal_assist()));
-        entries.add(new RadarEntry(stats.getOffensive_rebound()));
-        entries.add(new RadarEntry(stats.getDefensive_rebound()));
+    private void displayContributionsChart(List<PlayerStatsView> statsList) {
+        contributionsChart.clear();
 
-        RadarDataSet dataSet = new RadarDataSet(entries, stats.getPlayer_name());
-        dataSet.setColor(Color.BLUE);
-        dataSet.setFillColor(Color.CYAN);
-        dataSet.setDrawFilled(true);
+        List<IRadarDataSet> dataSets = new ArrayList<>();
 
-        RadarData data = new RadarData(dataSet);
+        for (PlayerStatsView stats : statsList) {
+            List<RadarEntry> entries = new ArrayList<>();
+            entries.add(new RadarEntry(stats.getIntercept()));
+            entries.add(new RadarEntry(stats.getDeflection()));
+            entries.add(new RadarEntry(stats.getGoal_assist()));
+            entries.add(new RadarEntry(stats.getOffensive_rebound()));
+            entries.add(new RadarEntry(stats.getDefensive_rebound()));
+
+            RadarDataSet dataSet = new RadarDataSet(entries, stats.getPlayer_name());
+            dataSet.setColor(getRandomColor());
+            dataSet.setFillColor(dataSet.getColor());
+            dataSet.setDrawFilled(true);
+            dataSet.setFillAlpha(80);
+            dataSet.setLineWidth(2f);
+
+            dataSets.add(dataSet);
+        }
+
+        RadarData data = new RadarData(); // create empty RadarData
+        for (IRadarDataSet set : dataSets) {
+            data.addDataSet(set); // add each player
+        }
+
+        data.setValueTextSize(10f);
         contributionsChart.setData(data);
 
+        contributionsChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(
+                new String[]{"Intercept", "Deflection", "Goal Assist", "Off Rebound", "Def Rebound"}));
         contributionsChart.getDescription().setEnabled(false);
+        contributionsChart.getLegend().setWordWrapEnabled(true);
         contributionsChart.invalidate();
     }
+
+    // Helper function to generate random color for each player
+    private int getRandomColor() {
+        int[] colors = com.github.mikephil.charting.utils.ColorTemplate.MATERIAL_COLORS;
+        return colors[(int) (Math.random() * colors.length)];
+    }
+
 
     private void displayTeamShootingChart(PlayerStatsView totals) {
         List<PieEntry> entries = new ArrayList<>();
@@ -428,4 +463,23 @@ public class MatchAnalysis extends AppCompatActivity {
         teamShootingChart.getDescription().setEnabled(false);
         teamShootingChart.invalidate();
     }
+    private void updateKpis(List<PlayerStatsView> statsList) {
+        int totalGoals = 0;
+        int totalAssists = 0;
+        int totalIntercepts = 0;
+        int totalDeflections = 0;
+
+        for (PlayerStatsView stats : statsList) {
+            totalGoals += stats.getGoal();
+            totalAssists += stats.getGoal_assist();
+            totalIntercepts += stats.getIntercept();
+            totalDeflections += stats.getDeflection();
+        }
+
+        tvKpiGoals.setText(String.valueOf(totalGoals));
+        tvKpiAssists.setText(String.valueOf(totalAssists));
+        tvKpiIntercepts.setText(String.valueOf(totalIntercepts));
+        tvKpiDeflections.setText(String.valueOf(totalDeflections));
+    }
+
 }

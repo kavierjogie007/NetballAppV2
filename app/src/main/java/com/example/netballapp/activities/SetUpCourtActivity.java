@@ -101,7 +101,7 @@ public class SetUpCourtActivity extends AppCompatActivity
                     long coachId = getSharedPreferences("MyAppPrefs", MODE_PRIVATE)
                             .getLong("coach_ID", -1);
 
-// Toast to check coachId
+                       // Toast to check coachId
                     Toast.makeText(SetUpCourtActivity.this, "Coach ID: " + coachId, Toast.LENGTH_SHORT).show();
                     if (coachId != -1) {
                         PlayerCoach pc = new PlayerCoach(coachId, selectedPlayer.getPlayer_ID());

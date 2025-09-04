@@ -1,6 +1,7 @@
 package com.example.netballapp.api;
 
 import com.example.netballapp.Model.Coach;
+import com.example.netballapp.Model.CoachGame;
 import com.example.netballapp.Model.Court;
 import com.example.netballapp.Model.Game;
 import com.example.netballapp.Model.Player;
@@ -119,8 +120,24 @@ public interface SuperbaseAPI {
     @POST("rest/v1/player_coach")
     Call<PlayerCoach> assignPlayerToCoach(@Body PlayerCoach playerCoach);
 
+    @POST("rest/v1/coach_game")
+    Call<CoachGame> assignCoachToGame(@Body CoachGame coachGame);
+
     // SuperbaseAPI.java
     @GET("rest/v1/player_stats")
     Call<List<PlayerStatsView>> getPlayerStatsByGame(@Query("game_ID") String gameIdFilter);
+
+    @GET("rest/v1/game")
+    Call<List<Game>> getGamesForCoach(
+            @Query("select") String select,
+            @Query("coach_game.coach_ID") String coachIdEq
+    );
+
+    // Delete a game by ID
+    @DELETE("rest/v1/game")
+    @Headers("Prefer: return=minimal") // Returns empty response
+    Call<Void> deleteGame(
+            @Query("game_ID") String idFilter // Pass like "eq.123"
+    );
 }
 

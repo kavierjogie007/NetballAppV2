@@ -101,6 +101,7 @@
             android:layout_columnWeight="1"
             android:background="@drawable/card_background"
             android:gravity="center"
+            android:onClick="onManageGamesClicked"
             android:orientation="vertical">
 
             <View

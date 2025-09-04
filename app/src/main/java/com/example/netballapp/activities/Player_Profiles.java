@@ -2,12 +2,13 @@ package com.example.netballapp.activities;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.netballapp.Model.Player;
@@ -34,23 +35,29 @@ public class Player_Profiles extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_player_profiles);
 
-        ListView listView = findViewById(R.id.playerListView);
+        RecyclerView recyclerView = findViewById(R.id.playerRecyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         players = new ArrayList<>();
 
         adapter = new PlayerAdapter(this, players, (player, position) ->
                 new AlertDialog.Builder(Player_Profiles.this)
-                .setTitle("Confirm Deletion")
-                .setMessage("Delete " + player.getPlayer_FirstName() + "?")
-                .setPositiveButton("Yes", (dialog, which) -> {
-                    deletePlayerFromAPI(player.getPlayer_ID(), position);
-                })
-                .setNegativeButton("Cancel", null)
-                .show());
-        listView.setAdapter(adapter);
+                        .setTitle("Confirm Deletion")
+                        .setMessage("Delete " + player.getPlayer_FirstName() + "?")
+                        .setPositiveButton("Yes", (dialog, which) -> {
+                            deletePlayerFromAPI(player.getPlayer_ID(), position);
+                        })
+                        .setNegativeButton("Cancel", null)
+                        .show()
+        );
+
+        recyclerView.setAdapter(adapter);
 
         api = RetrofitClient.getClient().create(SuperbaseAPI.class);
+        fetchPlayers();
+    }
 
+    private void fetchPlayers() {
         Call<List<Player>> call = api.getPlayers("*"); // Selects all columns
         call.enqueue(new Callback<List<Player>>() {
             @Override
@@ -59,14 +66,13 @@ public class Player_Profiles extends AppCompatActivity {
                     players.clear();
                     players.addAll(response.body());
                     adapter.notifyDataSetChanged();
-                } else
-                {
+                } else {
                     Log.e("API", "Unsuccessful: " + response.code());
                 }
             }
+
             @Override
-            public void onFailure(Call<List<Player>> call, Throwable t)
-            {
+            public void onFailure(Call<List<Player>> call, Throwable t) {
                 Log.e("API", "Failed: " + t.getMessage());
             }
         });
@@ -78,8 +84,7 @@ public class Player_Profiles extends AppCompatActivity {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.isSuccessful()) {
-                    players.remove(position);
-                    adapter.notifyDataSetChanged();
+                    adapter.removePlayer(position);
                     Toast.makeText(Player_Profiles.this, "Player deleted", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(Player_Profiles.this, "Failed to delete player", Toast.LENGTH_SHORT).show();
@@ -92,16 +97,14 @@ public class Player_Profiles extends AppCompatActivity {
             }
         });
     }
-    public void onBackClicked(View view)
-    {
-        Intent intent = new Intent(Player_Profiles.this, DashboardActivity.class);
-        startActivity(intent);
+
+    public void onBackClicked(View view) {
+        startActivity(new Intent(this, DashboardActivity.class));
         finish();
     }
 
     public void onAddPlayerClicked(View view) {
-        Intent intent = new Intent(Player_Profiles.this, AddPlayer.class);
-        startActivity(intent);
+        startActivity(new Intent(this, AddPlayer.class));
         finish();
     }
 
