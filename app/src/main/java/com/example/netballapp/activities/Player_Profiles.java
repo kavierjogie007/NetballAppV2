@@ -62,7 +62,6 @@ public class Player_Profiles extends AppCompatActivity {
         long coachId = getSharedPreferences("MyAppPrefs", MODE_PRIVATE)
                 .getLong("coach_ID", -1);
 
-        // Use !inner to join player_coach
         Call<List<Player>> call = api.getPlayersForCoach("*,player_coach!inner(*)", "eq." + coachId);
 
         call.enqueue(new Callback<List<Player>>() {
@@ -72,6 +71,8 @@ public class Player_Profiles extends AppCompatActivity {
                     players.clear();
                     players.addAll(response.body());
                     adapter.notifyDataSetChanged();
+
+                    toggleEmptyView();
                 } else {
                     Log.e("API", "Unsuccessful: " + response.code());
                 }
@@ -84,8 +85,6 @@ public class Player_Profiles extends AppCompatActivity {
         });
     }
 
-
-
     private void deletePlayerFromAPI(long playerId, int position) {
         Call<Void> call = api.deletePlayer("eq." + playerId);
         call.enqueue(new Callback<Void>() {
@@ -93,8 +92,10 @@ public class Player_Profiles extends AppCompatActivity {
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.isSuccessful()) {
                     adapter.removePlayer(position);
+                    toggleEmptyView(); // 👈 check again after deletion
                     Toast.makeText(Player_Profiles.this, "Player deleted", Toast.LENGTH_SHORT).show();
-                } else {
+                }
+                else {
                     String errorMsg = "Error code: " + response.code();
                     try {
                         if (response.errorBody() != null) {
@@ -114,6 +115,19 @@ public class Player_Profiles extends AppCompatActivity {
                 Log.e("API_DELETE_PLAYER", "Failure", t);
             }
         });
+    }
+
+    private void toggleEmptyView() {
+        View emptyView = findViewById(R.id.emptyView);
+        RecyclerView recyclerView = findViewById(R.id.playerRecyclerView);
+
+        if (players.isEmpty()) {
+            emptyView.setVisibility(View.VISIBLE);
+            recyclerView.setVisibility(View.GONE);
+        } else {
+            emptyView.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.VISIBLE);
+        }
     }
 
 

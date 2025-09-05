@@ -187,13 +187,15 @@ public class GameScreenActivity extends AppCompatActivity {
                 List<Player> players = response.body();
                 if (players != null && !players.isEmpty()) {
                     Player player = players.get(0);
-                    String playerName = player.getPlayer_FirstName() + " " + player.getPlayer_Surname();
+
+                    // Create two-line display with initials and position
+                    String playerDisplay = getInitials(player) + "\n(" + pos + ")";
 
                     // Match "posGS", "posGA", etc. in layout
                     int resId = getResources().getIdentifier("pos" + pos, "id", getPackageName());
                     TextView posText = findViewById(resId);
                     if (posText != null) {
-                        posText.setText(playerName);
+                        posText.setText(playerDisplay);
 
                         // Add click listener to record an action
                         posText.setOnClickListener(v -> {
@@ -209,6 +211,14 @@ public class GameScreenActivity extends AppCompatActivity {
             }
         });
     }
+
+    // Helper method
+    private String getInitials(Player player) {
+        String firstInitial = player.getPlayer_FirstName().substring(0, 1).toUpperCase();
+        String lastInitial = player.getPlayer_Surname().substring(0, 1).toUpperCase();
+        return firstInitial + "." + lastInitial + ".";
+    }
+
     private void showActionDialog(Player player, String pos) {
         String[] actions = {
                 "Goal",

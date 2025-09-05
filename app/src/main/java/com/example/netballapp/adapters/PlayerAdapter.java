@@ -41,8 +41,14 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.PlayerView
     public void onBindViewHolder(@NonNull PlayerViewHolder holder, int position) {
         Player player = playerList.get(position);
 
-        holder.txtFirstName.setText(player.getPlayer_FirstName());
-        holder.txtSurname.setText(player.getPlayer_Surname());
+        // Full name
+        holder.txtFullName.setText(player.getPlayer_FirstName() + " " + player.getPlayer_Surname());
+
+        // Other info (check for nulls)
+        holder.txtPlayerNumber.setText("Number: " + (player.getPlayer_Number() != null ? player.getPlayer_Number() : "-"));
+        holder.txtPlayerPosition.setText("Position: " + (player.getPlayer_position() != null ? player.getPlayer_position() : "-"));
+        holder.txtPlayerDOB.setText("DOB: " + (player.getPlayer_DOB() != null ? player.getPlayer_DOB() : "-"));
+        holder.txtPlayerHeight.setText("Height: " + (player.getPlayer_Height() != null ? player.getPlayer_Height() + " cm" : "-"));
 
         // Update button click
         holder.btnUpdate.setOnClickListener(v -> {
@@ -52,10 +58,9 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.PlayerView
         });
 
         // Delete button click
-        holder.btnDelete.setOnClickListener(v -> {
-            listener.onDeletePlayer(player, position);
-        });
+        holder.btnDelete.setOnClickListener(v -> listener.onDeletePlayer(player, position));
     }
+
 
     @Override
     public int getItemCount() {
@@ -63,17 +68,21 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.PlayerView
     }
 
     public static class PlayerViewHolder extends RecyclerView.ViewHolder {
-        TextView txtFirstName, txtSurname;
+        TextView txtFullName, txtPlayerNumber, txtPlayerPosition, txtPlayerDOB, txtPlayerHeight;
         Button btnUpdate, btnDelete;
 
         public PlayerViewHolder(@NonNull View itemView) {
             super(itemView);
-            txtFirstName = itemView.findViewById(R.id.txtFirstName);
-            txtSurname = itemView.findViewById(R.id.txtSurname);
+            txtFullName = itemView.findViewById(R.id.txtFullName);
+            txtPlayerNumber = itemView.findViewById(R.id.txtPlayerNumber);
+            txtPlayerPosition = itemView.findViewById(R.id.txtPlayerPosition);
+            txtPlayerDOB = itemView.findViewById(R.id.txtPlayerDOB);
+            txtPlayerHeight = itemView.findViewById(R.id.txtPlayerHeight);
             btnUpdate = itemView.findViewById(R.id.btnUpdate);
             btnDelete = itemView.findViewById(R.id.btnDelete);
         }
     }
+
 
     // Method to remove player from list
     public void removePlayer(int position) {

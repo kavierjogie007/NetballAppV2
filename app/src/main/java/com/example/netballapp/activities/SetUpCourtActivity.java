@@ -77,7 +77,6 @@ public class SetUpCourtActivity extends AppCompatActivity
         posGD.setOnClickListener(v -> assignPlayerToPosition("GD"));
         posGK.setOnClickListener(v -> assignPlayerToPosition("GK"));
 
-
         // Fetch players
         loadPlayersFromSupabase();
         loadPlayers(currentGameId);
@@ -89,7 +88,13 @@ public class SetUpCourtActivity extends AppCompatActivity
             return;
         }
 
-        // Assign player to court
+        if (!position.equals(selectedPlayer.getPlayer_position())) {
+            Toast.makeText(this, selectedPlayer.getPlayer_FirstName() +
+                            " can only play " + selectedPlayer.getPlayer_position(),
+                    Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         Court assignment = new Court(position, currentGameId, selectedPlayer.getPlayer_ID());
 
         api.assignPlayerToCourt(assignment).enqueue(new Callback<List<Court>>() {
@@ -97,15 +102,17 @@ public class SetUpCourtActivity extends AppCompatActivity
             public void onResponse(Call<List<Court>> call, Response<List<Court>> response) {
                 if (response.isSuccessful() && response.body() != null) {
 
-                    String playerName = selectedPlayer.getPlayer_FirstName() + " " + selectedPlayer.getPlayer_Surname();
+                    String playerDisplay = getInitials(selectedPlayer) + "\n(" + position + ")"; // two-line format
+
+                    // Only update the correct TextView
                     switch (position) {
-                        case "GA": posGA.setText(playerName); break;
-                        case "GS": posGS.setText(playerName); break;
-                        case "C":  posC.setText(playerName); break;
-                        case "WA": posWA.setText(playerName); break;
-                        case "WD": posWD.setText(playerName); break;
-                        case "GD": posGD.setText(playerName); break;
-                        case "GK": posGK.setText(playerName); break;
+                        case "GA": posGA.setText(playerDisplay); break;
+                        case "GS": posGS.setText(playerDisplay); break;
+                        case "C":  posC.setText(playerDisplay); break;
+                        case "WA": posWA.setText(playerDisplay); break;
+                        case "WD": posWD.setText(playerDisplay); break;
+                        case "GD": posGD.setText(playerDisplay); break;
+                        case "GK": posGK.setText(playerDisplay); break;
                     }
 
                     Toast.makeText(SetUpCourtActivity.this, "Player assigned to " + position, Toast.LENGTH_SHORT).show();
@@ -124,22 +131,35 @@ public class SetUpCourtActivity extends AppCompatActivity
         });
     }
 
+
+    // Helper method
+    private String getInitials(Player player) {
+        String firstInitial = player.getPlayer_FirstName().substring(0, 1).toUpperCase();
+        String lastInitial = player.getPlayer_Surname().substring(0, 1).toUpperCase();
+        return firstInitial + "." + lastInitial + ".";
+    }
+
     private void loadPlayersFromSupabase() {
-        Call<List<Player>> call = api.getPlayers("*");
+        // Get coach ID from SharedPreferences
+        long coachId = getSharedPreferences("MyAppPrefs", MODE_PRIVATE)
+                .getLong("coach_ID", -1);
+        if (coachId == -1) {
+            Toast.makeText(this, "Coach ID not found.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        Call<List<Player>> call = api.getPlayersForCoach("*,player_coach!inner(*)", "eq." + coachId);
 
         call.enqueue(new Callback<List<Player>>() {
             @Override
             public void onResponse(Call<List<Player>> call, Response<List<Player>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     List<Player> playerList = response.body();
-                    adapter = new PlayerAdapterCourt(playerList, SetUpCourtActivity.this, player -> {
-                        selectedPlayer = player;
+                    adapter = new PlayerAdapterCourt(playerList, SetUpCourtActivity.this, player -> {selectedPlayer = player;
                         Toast.makeText(SetUpCourtActivity.this, "Selected: " + player.getPlayer_FirstName(), Toast.LENGTH_SHORT).show();
                     });
                     lstPlayers.setAdapter(adapter);
-
-                } else
-                {
+                } else {
                     Toast.makeText(SetUpCourtActivity.this, "Failed to load players", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -150,6 +170,7 @@ public class SetUpCourtActivity extends AppCompatActivity
             }
         });
     }
+
 
     private boolean isTeamComplete() {
         return !posGA.getText().toString().equals("GA") &&
@@ -230,10 +251,10 @@ public class SetUpCourtActivity extends AppCompatActivity
     }
 
     public void onNextClicked(View view) {
-    /*    if (!isTeamComplete()) {
+        if (!isTeamComplete()) {
             Toast.makeText(this, "Please assign all 7 positions before continuing.", Toast.LENGTH_SHORT).show();
             return;
-        }*/
+        }
 
         Intent intent = new Intent(SetUpCourtActivity.this, SetBenchPlayersActivity.class);
         intent.putExtra("players_list", new ArrayList<>(adapter.getPlayers()));

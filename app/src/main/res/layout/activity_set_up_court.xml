@@ -63,47 +63,49 @@
             app:layout_constraintVertical_bias="0.5"
             app:layout_constraintWidth_percent="0.6">
 
-
+            <!-- Center Circle -->
             <View
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:background="@drawable/circle_white_border"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHeight_percent="0.1"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintWidth_percent="0.2" />
+                app:layout_constraintHeight_percent="0.20"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent="0.25" />
 
+            <!-- Top Half Circle -->
             <View
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:background="@drawable/half_circle_top"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHeight_percent="0.13"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintWidth_percent="0.4" />
+                app:layout_constraintHeight_percent="0.18"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent="0.45" />
 
+            <!-- Bottom Half Circle -->
             <View
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:background="@drawable/half_circle_bottom"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHeight_percent="0.10"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintWidth_percent="0.4" />
+                app:layout_constraintHeight_percent="0.15"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintWidth_percent="0.45" />
 
+            <!-- Player Positions -->
             <TextView
                 android:id="@+id/posGS"
                 style="@style/PlayerPosition"
                 android:clickable="true"
                 android:gravity="center"
-                android:minWidth="48dp"
-                android:minHeight="48dp"
                 android:padding="8dp"
                 android:text="GS"
+                android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -115,7 +117,10 @@
                 android:id="@+id/posGA"
                 style="@style/PlayerPosition"
                 android:clickable="true"
+                android:gravity="center"
+                android:padding="6dp"
                 android:text="GA"
+                android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.3"
@@ -127,7 +132,10 @@
                 android:id="@+id/posWA"
                 style="@style/PlayerPosition"
                 android:clickable="true"
+                android:gravity="center"
+                android:padding="6dp"
                 android:text="WA"
+                android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.7"
@@ -139,7 +147,10 @@
                 android:id="@+id/posC"
                 style="@style/PlayerPosition"
                 android:clickable="true"
+                android:gravity="center"
+                android:padding="8dp"
                 android:text="C"
+                android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -151,7 +162,10 @@
                 android:id="@+id/posWD"
                 style="@style/PlayerPosition"
                 android:clickable="true"
+                android:gravity="center"
+                android:padding="6dp"
                 android:text="WD"
+                android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.3"
@@ -163,7 +177,10 @@
                 android:id="@+id/posGD"
                 style="@style/PlayerPosition"
                 android:clickable="true"
+                android:gravity="center"
+                android:padding="6dp"
                 android:text="GD"
+                android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.7"
@@ -175,7 +192,10 @@
                 android:id="@+id/posGK"
                 style="@style/PlayerPosition"
                 android:clickable="true"
+                android:gravity="center"
+                android:padding="8dp"
                 android:text="GK"
+                android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -184,6 +204,7 @@
                 app:layout_constraintVertical_bias="0.98" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/lstPlayers"
