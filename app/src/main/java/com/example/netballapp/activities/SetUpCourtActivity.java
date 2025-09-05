@@ -97,29 +97,6 @@ public class SetUpCourtActivity extends AppCompatActivity
             public void onResponse(Call<List<Court>> call, Response<List<Court>> response) {
                 if (response.isSuccessful() && response.body() != null) {
 
-                    // Assign player to coach
-                    long coachId = getSharedPreferences("MyAppPrefs", MODE_PRIVATE)
-                            .getLong("coach_ID", -1);
-
-                       // Toast to check coachId
-                    Toast.makeText(SetUpCourtActivity.this, "Coach ID: " + coachId, Toast.LENGTH_SHORT).show();
-                    if (coachId != -1) {
-                        PlayerCoach pc = new PlayerCoach(coachId, selectedPlayer.getPlayer_ID());
-                        api.assignPlayerToCoach(pc).enqueue(new Callback<PlayerCoach>() {
-                            @Override
-                            public void onResponse(Call<PlayerCoach> call, Response<PlayerCoach> response) {
-                                if (!response.isSuccessful()) {
-                                    Log.e("SetUpCourt", "Player-Coach assignment failed: " + response.code());
-                                }
-                            }
-
-                            @Override
-                            public void onFailure(Call<PlayerCoach> call, Throwable t) {
-                                Log.e("SetUpCourt", "Player-Coach assignment error: " + t.getMessage());
-                            }
-                        });
-                    }
-
                     String playerName = selectedPlayer.getPlayer_FirstName() + " " + selectedPlayer.getPlayer_Surname();
                     switch (position) {
                         case "GA": posGA.setText(playerName); break;

@@ -54,7 +54,6 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.PlayerView
         // Delete button click
         holder.btnDelete.setOnClickListener(v -> {
             listener.onDeletePlayer(player, position);
-            removePlayer(position);
         });
     }
 

@@ -75,11 +75,6 @@ public interface SuperbaseAPI {
             @Query("player_ID") String idFilter,
             @Body Player updatedPlayer);
 
-    @DELETE("rest/v1/player")
-    @Headers("Prefer: return=minimal") //Returns empty response
-    Call<Void> deletePlayer(
-            @Query("player_ID") String idFilter);
-
     //Game table
     @POST("rest/v1/game")
     @Headers({"Prefer: return=representation"})
@@ -133,11 +128,24 @@ public interface SuperbaseAPI {
             @Query("coach_game.coach_ID") String coachIdEq
     );
 
+    @GET("rest/v1/player")
+    Call<List<Player>> getPlayersForCoach(
+            @Query("select") String select,
+            @Query("player_coach.coach_ID") String coachIdEq
+    );
+
+
+
     // Delete a game by ID
     @DELETE("rest/v1/game")
     @Headers("Prefer: return=minimal") // Returns empty response
     Call<Void> deleteGame(
             @Query("game_ID") String idFilter // Pass like "eq.123"
     );
+
+    @DELETE("rest/v1/player")
+    @Headers("Prefer: return=minimal") //Returns empty response
+    Call<Void> deletePlayer(
+            @Query("player_ID") String idFilter);
 }
 

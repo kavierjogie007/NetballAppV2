@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -12,6 +13,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.netballapp.Model.Player;
+import com.example.netballapp.Model.PlayerCoach;
 import com.example.netballapp.Model.SessionManager;
 import com.example.netballapp.Model.UIUtils;
 import com.example.netballapp.R;
@@ -138,6 +140,29 @@ public class AddPlayer extends AppCompatActivity
             @Override
             public void onResponse(Call<List<Player>> call, Response<List<Player>> response) {
                 if (response.isSuccessful() && response.body() != null && !response.body().isEmpty()) {
+                    Player registeredPlayer = response.body().get(0);
+
+                    // Get current coach ID
+                    long coachId = getSharedPreferences("MyAppPrefs", MODE_PRIVATE)
+                            .getLong("coach_ID", -1);
+
+                    if (coachId != -1) {
+                        PlayerCoach pc = new PlayerCoach(coachId, registeredPlayer.getPlayer_ID());
+                        api.assignPlayerToCoach(pc).enqueue(new Callback<PlayerCoach>() {
+                            @Override
+                            public void onResponse(Call<PlayerCoach> call, Response<PlayerCoach> response) {
+                                if (!response.isSuccessful()) {
+                                    Log.e("AddPlayer", "Player-Coach assignment failed: " + response.code());
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<PlayerCoach> call, Throwable t) {
+                                Log.e("AddPlayer", "Player-Coach assignment error: " + t.getMessage());
+                            }
+                        });
+                    }
+
                     Toast.makeText(AddPlayer.this, "Registration successful!", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(AddPlayer.this, Player_Profiles.class));
                     finish();
@@ -145,6 +170,7 @@ public class AddPlayer extends AppCompatActivity
                     Toast.makeText(AddPlayer.this, "Registration failed. Username might already exist.", Toast.LENGTH_SHORT).show();
                 }
             }
+
 
             @Override
             public void onFailure(Call<List<Player>> call, Throwable t) {

@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.netballapp.Model.Game;
 import com.example.netballapp.Model.Player;
 import com.example.netballapp.Model.SessionManager;
 import com.example.netballapp.adapters.PlayerAdapter;
@@ -54,11 +55,16 @@ public class Player_Profiles extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
 
         api = RetrofitClient.getClient().create(SuperbaseAPI.class);
-        fetchPlayers();
+        loadPlayersFromAPI();
     }
 
-    private void fetchPlayers() {
-        Call<List<Player>> call = api.getPlayers("*"); // Selects all columns
+    private void loadPlayersFromAPI() {
+        long coachId = getSharedPreferences("MyAppPrefs", MODE_PRIVATE)
+                .getLong("coach_ID", -1);
+
+        // Use !inner to join player_coach
+        Call<List<Player>> call = api.getPlayersForCoach("*,player_coach!inner(*)", "eq." + coachId);
+
         call.enqueue(new Callback<List<Player>>() {
             @Override
             public void onResponse(Call<List<Player>> call, Response<List<Player>> response) {
@@ -78,6 +84,8 @@ public class Player_Profiles extends AppCompatActivity {
         });
     }
 
+
+
     private void deletePlayerFromAPI(long playerId, int position) {
         Call<Void> call = api.deletePlayer("eq." + playerId);
         call.enqueue(new Callback<Void>() {
@@ -87,16 +95,27 @@ public class Player_Profiles extends AppCompatActivity {
                     adapter.removePlayer(position);
                     Toast.makeText(Player_Profiles.this, "Player deleted", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(Player_Profiles.this, "Failed to delete player", Toast.LENGTH_SHORT).show();
+                    String errorMsg = "Error code: " + response.code();
+                    try {
+                        if (response.errorBody() != null) {
+                            errorMsg += "\n" + response.errorBody().string();
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    Toast.makeText(Player_Profiles.this, errorMsg, Toast.LENGTH_LONG).show();
+                    Log.e("API_DELETE_PLAYER", errorMsg);
                 }
             }
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
                 Toast.makeText(Player_Profiles.this, "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.e("API_DELETE_PLAYER", "Failure", t);
             }
         });
     }
+
 
     public void onBackClicked(View view) {
         startActivity(new Intent(this, DashboardActivity.class));
