@@ -16,6 +16,10 @@ public class PlayerAction {
         this.game_ID = game_ID;
     }
 
+    public String getAction_Period() {
+        return action_Period;
+    }
+
     public Long getAction_ID() {
         return action_ID;
     }
@@ -28,4 +32,7 @@ public class PlayerAction {
         return action_Type;
     }
     // getters and setters if needed
+    public String getAction_TimeStamp() {
+        return action_TimeStamp;
+    }
 }

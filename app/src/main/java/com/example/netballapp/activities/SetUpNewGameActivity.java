@@ -68,7 +68,7 @@ public class SetUpNewGameActivity extends AppCompatActivity {
             return;
         }
 
-        Game game = new Game(gameName,oppositionName,gameVenue,gameDate,gameType,0,0,0,0,"","");
+        Game game = new Game(gameName,oppositionName,gameVenue,gameDate,gameType,0,0,0,"","");
 
         Call<List<Game>> call = api.setUpNewGame(game);
         call.enqueue(new Callback<List<Game>>() {
@@ -82,7 +82,7 @@ public class SetUpNewGameActivity extends AppCompatActivity {
                     getSharedPreferences("MyAppPrefs", MODE_PRIVATE)
                             .edit()
                             .putLong("game_ID", savedGame.getGame_ID())
-                            .putInt("game_BenchPlayers", savedGame.getGame_BenchPositions())
+                            .putString("oppositionName", edtOppositionName.getText().toString().trim())
                             .apply();
 
                     // ✅ Now link coach to game

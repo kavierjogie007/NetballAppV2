@@ -339,6 +339,11 @@
                             android:layout_height="wrap_content"
                             android:text="Team Shooting"
                             android:layout_marginStart="8dp"/>
+                        <Spinner
+                            android:id="@+id/spinnerPeriod"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
                     </LinearLayout>
                 </HorizontalScrollView>
             </com.google.android.material.card.MaterialCardView>

@@ -147,5 +147,13 @@ public interface SuperbaseAPI {
     @Headers("Prefer: return=minimal") //Returns empty response
     Call<Void> deletePlayer(
             @Query("player_ID") String idFilter);
+
+    @PATCH("rest/v1/game")
+    @Headers({"Prefer: return=representation"})
+    Call<List<Game>> updateGameScore(
+            @Query("game_ID") String gameIdFilter,
+            @Body Map<String, Object> updates
+    );
+
 }
 

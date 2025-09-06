@@ -91,7 +91,6 @@ public class MatchAnalysis extends AppCompatActivity {
         tvKpiIntercepts = findViewById(R.id.tvKpiIntercepts);
         tvKpiDeflections = findViewById(R.id.tvKpiDeflections);
 
-
         rvPlayerActions.setLayoutManager(new LinearLayoutManager(this));
 
         Button btnGoalsChart = findViewById(R.id.btnGoalsChart);
@@ -129,13 +128,11 @@ public class MatchAnalysis extends AppCompatActivity {
             }
         };
 
-
         btnGoalsChart.setOnClickListener(chartToggleListener);
         btnAccuracyChart.setOnClickListener(chartToggleListener);
         btnErrorsChart.setOnClickListener(chartToggleListener);
         btnRadarChart.setOnClickListener(chartToggleListener);
         btnTeamShootingChart.setOnClickListener(chartToggleListener);
-
 
         toggleStats.setOnCheckedChangeListener((group, checkedId) -> {
             // First, hide everything
@@ -158,8 +155,6 @@ public class MatchAnalysis extends AppCompatActivity {
                 teamStatsCard.setVisibility(View.VISIBLE);
             }
         });
-
-
 
         api = RetrofitClient.getClient().create(SuperbaseAPI.class);
 
@@ -227,7 +222,7 @@ public class MatchAnalysis extends AppCompatActivity {
                     tvGameName.setText(game.getGame_Name());
                     tvGameDateVenue.setText(game.getGame_Date() + " | " + game.getGame_Venue());
                     tvMadibazScore.setText("Madibaz: " + game.getGame_MadibazScore());
-                    tvOppositionScore.setText("Team B: " + game.getGame_OppositionScore());
+                    tvOppositionScore.setText(game.getGame_OppositionName()+": " + game.getGame_OppositionScore());
 
                     loadPlayerStats(gameID);
                 } else {
@@ -305,7 +300,6 @@ public class MatchAnalysis extends AppCompatActivity {
             rvPlayerActions.setVisibility(View.GONE);
             teamStatsCard.setVisibility(View.VISIBLE);
         }
-
     }
 
     private void displayPlayerStatsChart(List<PlayerStatsView> statsList) {
@@ -481,5 +475,4 @@ public class MatchAnalysis extends AppCompatActivity {
         tvKpiIntercepts.setText(String.valueOf(totalIntercepts));
         tvKpiDeflections.setText(String.valueOf(totalDeflections));
     }
-
 }

@@ -169,65 +169,204 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <!-- SIDE PANEL: Scores + Bench + Notes -->
+        <!-- Improved Scoreboard -->
+        <!-- SIDE PANEL: Scores + Timer + Buttons + Notes -->
         <LinearLayout
             android:id="@+id/sidePanel"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:background="@android:color/white"
             android:orientation="vertical"
             android:padding="8dp"
+            android:background="@android:color/white"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/court">
 
-            <!-- Scoreboard -->
-            <TextView
-                android:id="@+id/scoreMadibaz"
+            <!-- ===== Improved Scoreboard ===== -->
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Madibaz: 14"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:gravity="center"/>
+                android:orientation="vertical"
+                android:gravity="center"
+                android:paddingBottom="8dp">
 
-            <TextView
-                android:id="@+id/scoreThunderbolts"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Thunderbolts: 12"
-                android:textSize="18sp"
-                android:gravity="center"/>
+                <!-- Madibaz Score Card -->
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="4dp"
+                    android:backgroundTint="#033E8C">
 
-            <!-- Timer -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="12dp"
+                        android:gravity="center">
+
+                        <TextView
+                            android:id="@+id/scoreMadibaz"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Madibaz"
+                            android:textColor="@android:color/white"
+                            android:textSize="16sp"
+                            android:textStyle="bold"/>
+
+                        <TextView
+                            android:id="@+id/scoreMadibazValue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0"
+                            android:textColor="@android:color/white"
+                            android:textSize="28sp"
+                            android:textStyle="bold"/>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- Opposition Score Card -->
+                <!-- Opposition Score Card -->
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="4dp"
+                    android:backgroundTint="#FF3D00">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="12dp"
+                        android:gravity="center">
+
+                        <TextView
+                            android:id="@+id/scoreOpposition"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Opposition"
+                            android:textColor="@android:color/white"
+                            android:textSize="16sp"
+                            android:textStyle="bold"/>
+
+                        <!-- Row for score + button -->
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center">
+
+                            <TextView
+                                android:id="@+id/scoreOppositionValue"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="0"
+                                android:textColor="@android:color/white"
+                                android:textSize="28sp"
+                                android:textStyle="bold"
+                                android:layout_marginEnd="12dp"/>
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/addOppositionScoreButton"
+                                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                                android:layout_width="48dp"
+                                android:layout_height="48dp"
+                                android:text="+"
+                                android:textColor="@android:color/white"
+                                android:textSize="18sp"
+                                android:backgroundTint="#D32F2F"
+                                app:cornerRadius="24dp"
+                                app:strokeWidth="0dp"
+                                app:elevation="2dp"/>
+                        </LinearLayout>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+
+            <!-- Centre Pass -->
             <TextView
-                android:id="@+id/timer"
+                android:id="@+id/centrePassText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="12:40"
-                android:textSize="20sp"
+                android:text="Centre Pass: Not set"
+                android:textSize="16sp"
                 android:textStyle="bold"
                 android:gravity="center"
-                android:paddingTop="8dp"/>
+                android:paddingTop="4dp"/>
 
+            <!-- Timer & Half Card -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/timerCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="4dp"
+                android:backgroundTint="#FFC107">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="12dp"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/timer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="00:00"
+                        android:textSize="22sp"
+                        android:textStyle="bold"
+                        android:textColor="@android:color/black"
+                        android:gravity="center"/>
+
+                    <TextView
+                        android:id="@+id/halfLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1st Half"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textColor="@android:color/black"
+                        android:gravity="center"
+                        android:paddingTop="4dp"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+
+            <!-- Side Panel Buttons -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:paddingTop="8dp">
 
-                <Button
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/startButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Start"/>
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="0dp"
+                    android:layout_height="56dp"
+                    android:layout_weight="1"
+                    android:text="Start"
+                    android:textColor="@android:color/white"
+                    android:backgroundTint="#033E8C"/>
 
-                <Button
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/endHalfButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="0dp"
+                    android:layout_height="56dp"
+                    android:layout_weight="1"
                     android:layout_marginStart="8dp"
-                    android:text="End Half"/>
+                    android:text="End Half"
+                    android:textColor="@android:color/white"
+                    android:backgroundTint="#033E8C"/>
             </LinearLayout>
 
             <!-- Notes -->
@@ -246,18 +385,13 @@
                 android:gravity="top"
                 android:hint="Type notes here"
                 android:inputType="textMultiLine"
-                android:scrollbars="vertical" />
-
-            <Button
-                android:id="@+id/saveNotes"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Save Notes"/>
-
+                android:scrollbars="vertical"/>
         </LinearLayout>
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <!-- ====== BOTTOM BUTTONS ====== -->
+    <!-- ====== BOTTOM BUTTONS (now a sibling) ====== -->
     <LinearLayout
         android:id="@+id/buttonGroup"
         android:layout_width="0dp"
@@ -268,15 +402,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
-
-        <Button
-            android:id="@+id/exitButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:backgroundTint="#f44336"
-            android:text="Exit to Records"
-            android:textColor="@android:color/white"/>
+        <!-- Empty, no buttons -->
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

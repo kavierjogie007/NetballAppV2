@@ -21,9 +21,6 @@ public class Game {
     @SerializedName("game_type")
     private String game_Type;
 
-    @SerializedName("game_bench_positions")
-    private Integer game_BenchPositions;
-
     @SerializedName("game_madibaz_score")
     private Integer game_MadibazScore;
 
@@ -51,13 +48,12 @@ public class Game {
         return game_OppositionScore;
     }
 
-    public Game(String game_Name, String game_OppositionName, String game_Venue, String game_Date, String game_Type, Integer game_BenchPositions, Integer game_MadibazScore, Integer game_OppositionScore, Integer game_Timer, String game_CurrentCentrePassTeam, String game_CoachNote) {
+    public Game(String game_Name, String game_OppositionName, String game_Venue, String game_Date, String game_Type, Integer game_MadibazScore, Integer game_OppositionScore, Integer game_Timer, String game_CurrentCentrePassTeam, String game_CoachNote) {
         this.game_Name = game_Name;
         this.game_OppositionName = game_OppositionName;
         this.game_Venue = game_Venue;
         this.game_Date = game_Date;
         this.game_Type = game_Type;
-        this.game_BenchPositions = game_BenchPositions;
         this.game_MadibazScore = game_MadibazScore;
         this.game_OppositionScore = game_OppositionScore;
         this.game_Timer = game_Timer;
@@ -84,7 +80,4 @@ public class Game {
         return game_ID;
     }
 
-    public Integer getGame_BenchPositions() {
-        return game_BenchPositions;
-    }
 }
