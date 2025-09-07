@@ -56,9 +56,9 @@ public class GameAdapter extends BaseAdapter
         Button updateBtn = convertView.findViewById(R.id.updateBtn);
         Button deleteBtn = convertView.findViewById(R.id.deleteBtn);
 
-        gameName.setText(game.getGame_Name());
-        opposition.setText(game.getGame_OppositionName());
-        gameDate.setText(game.getGame_Date());
+        gameName.setText("Game Name: " + game.getGame_Name());
+        opposition.setText("Opposition: " + game.getGame_OppositionName());
+        gameDate.setText("Date: " + game.getGame_Date());
 
         viewBtn.setOnClickListener(v -> listener.onView(game, position));
         updateBtn.setOnClickListener(v -> listener.onUpdate(game, position));

@@ -62,7 +62,6 @@ public class MatchAnalysis extends AppCompatActivity {
     private RadarChart contributionsChart;
     private PieChart teamShootingChart;
     private MaterialCardView chartButtonsCard;
-
     private TextView tvKpiGoals, tvKpiAssists, tvKpiIntercepts, tvKpiDeflections;
     private MaterialCardView rvPlayerActionsCard;
 

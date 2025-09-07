@@ -134,8 +134,6 @@ public interface SuperbaseAPI {
             @Query("player_coach.coach_ID") String coachIdEq
     );
 
-
-
     // Delete a game by ID
     @DELETE("rest/v1/game")
     @Headers("Prefer: return=minimal") // Returns empty response

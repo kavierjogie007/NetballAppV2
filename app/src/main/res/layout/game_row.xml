@@ -27,16 +27,17 @@
                 android:id="@+id/gameName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Match 1"
+                android:text="Game Name: Match 1"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:textColor="#212121"/>
+
 
             <TextView
                 android:id="@+id/opposition"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Team B"
+                android:text="Opposition: Team B"
                 android:textSize="14sp"
                 android:textColor="#555555"
                 android:paddingTop="2dp"/>
@@ -45,10 +46,11 @@
                 android:id="@+id/gameDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="2025-05-21"
+                android:text="Date: 2025-05-21"
                 android:textSize="14sp"
                 android:textColor="#555555"
                 android:paddingTop="2dp"/>
+
         </LinearLayout>
 
         <!-- Button container -->

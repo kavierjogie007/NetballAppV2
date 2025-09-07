@@ -339,10 +339,27 @@
                             android:layout_height="wrap_content"
                             android:text="Team Shooting"
                             android:layout_marginStart="8dp"/>
-                        <Spinner
-                            android:id="@+id/spinnerPeriod"
+                        <RadioGroup
+                            android:id="@+id/rbHalfToggle"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"/>
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="8dp">
+
+                            <RadioButton
+                                android:id="@+id/rbHalf1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Half 1"
+                                android:checked="true"/>
+
+                            <RadioButton
+                                android:id="@+id/rbHalf2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Half 2"/>
+                        </RadioGroup>
+
 
                     </LinearLayout>
                 </HorizontalScrollView>
